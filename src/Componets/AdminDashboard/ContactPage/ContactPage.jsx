@@ -16,7 +16,9 @@ const ContactPage = () => {
 
   const fetchContacts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/contact/get");
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/contact/get"
+      );
       setContacts(
         Array.isArray(response.data) ? response.data : [response.data]
       );
@@ -42,7 +44,7 @@ const ContactPage = () => {
   const confirmDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/contact/contact/${deleteContactId}`
+        `https://sanskaarvalley-backend.vercel.app/contact/contact/${deleteContactId}`
       );
       setIsDeleteModalOpen(false);
       setDeleteContactId(null);
@@ -110,13 +112,16 @@ const ContactPage = () => {
         if (isEditing && selectedContact) {
           // Update the contact
           await axios.put(
-            `http://localhost:5000/contact/contact/${selectedContact._id}`,
+            `https://sanskaarvalley-backend.vercel.app/contact/contact/${selectedContact._id}`,
             values
           );
           toast.success("Contact updated successfully!");
         } else {
           // Add a new contact
-          await axios.post("http://localhost:5000/contact/add", values);
+          await axios.post(
+            "https://sanskaarvalley-backend.vercel.app/contact/add",
+            values
+          );
           toast.success("Contact saved successfully!");
         }
 

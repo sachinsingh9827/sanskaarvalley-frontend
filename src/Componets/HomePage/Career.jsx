@@ -18,6 +18,8 @@ const Career = () => {
         const response = await axios.get(
           "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
         );
+        console.log("Job positions:", response.data.jobs);
+
         setPositions(response.data.jobs || []);
       } catch (error) {
         console.error("Error fetching positions:", error);
