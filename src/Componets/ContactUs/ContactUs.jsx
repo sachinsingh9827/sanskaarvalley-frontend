@@ -32,7 +32,7 @@ const ContactUs = () => {
   // Handle form submission
   const handleSubmit = (values, { resetForm }) => {
     axios
-      .post("http://localhost:5000/user-contact", values)
+      .post("https://sanskaarvalley-backend.vercel.app/user-contact", values)
       .then((response) => {
         toast.success("Your message has been sent successfully!"); // Success toast
         resetForm();

@@ -14,7 +14,7 @@ const Footer = () => {
 
   useEffect(() => {
     axios
-      .get("https://sanskaarvalley-backend.vercel.app/contact/get")
+      .get("http://localhost:5000/contact/get")
       .then((response) => {
         setContactInfo(response.data);
       })
