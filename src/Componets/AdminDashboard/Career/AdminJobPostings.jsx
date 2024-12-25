@@ -63,7 +63,9 @@ const AdminJobPostings = () => {
   }));
   const fetchPositions = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/job-requirement");
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/job-requirement"
+      );
       setJobPosts(response.data.jobs);
     } catch (error) {
       console.error("Error fetching positions:", error);
@@ -118,8 +120,8 @@ const AdminJobPostings = () => {
   const handleSubmit = (values, { resetForm }) => {
     const method = editJobId ? "put" : "post";
     const url = editJobId
-      ? `http://localhost:5000/job-requirement/${editJobId}`
-      : "http://localhost:5000/job-requirement";
+      ? `https://sanskaarvalley-backend.vercel.app/job-requirement/${editJobId}`
+      : "https://sanskaarvalley-backend.vercel.app/job-requirement";
 
     axios({
       method,
@@ -165,7 +167,7 @@ const AdminJobPostings = () => {
 
       // Send DELETE request to the server
       await axios.delete(
-        `http://localhost:5000/job-requirement/${jobToDelete}`
+        `https://sanskaarvalley-backend.vercel.app/job-requirement/${jobToDelete}`
       );
 
       // Update the job posts state
@@ -192,7 +194,7 @@ const AdminJobPostings = () => {
     try {
       const updatedStatus = !currentStatus; // Toggle the current status
       await axios.put(
-        `http://localhost:5000/job-requirement/toggle-status/${jobId}`,
+        `https://sanskaarvalley-backend.vercel.app/toggle-status/${jobId}`,
         {
           isActive: updatedStatus,
         }
