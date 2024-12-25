@@ -62,7 +62,7 @@ const Career = () => {
       formData.append("position", selectedPosition.title);
 
       const response = await axios.post(
-        "http://localhost:5000/career/apply",
+        "https://sanskaarvalley-backend.vercel.app/career/apply",
         formData,
         {
           headers: {
