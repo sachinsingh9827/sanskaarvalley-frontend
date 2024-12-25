@@ -16,7 +16,7 @@ const Career = () => {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/job-requirement/active"
+          "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
         );
         setPositions(response.data.jobs || []);
       } catch (error) {
