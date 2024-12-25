@@ -120,7 +120,7 @@ const AdminJobPostings = () => {
   const handleSubmit = (values, { resetForm }) => {
     const method = editJobId ? "put" : "post";
     const url = editJobId
-      ? `https://sanskaarvalley-backend.vercel.app/job-requirement/${editJobId}`
+      ? `https://sanskaarvalley-backend.vercel.app/job-requirement/toggle-status/${editJobId}`
       : "https://sanskaarvalley-backend.vercel.app/job-requirement";
 
     axios({
