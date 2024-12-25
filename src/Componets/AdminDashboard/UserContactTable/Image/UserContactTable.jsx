@@ -22,7 +22,7 @@ const UserContactTable = () => {
     setRotated(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/user-contact?page=${page}`
+        `https://sanskaarvalley-backend.vercel.app/user-contact?page=${page}`
       );
       const data = response.data;
       setContacts(data.contacts);
@@ -41,7 +41,7 @@ const UserContactTable = () => {
   const handleDelete = async (contactId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/user-contact/${contactId}`
+        `https://sanskaarvalley-backend.vercel.app/user-contact/${contactId}`
       );
       if (response.status === 200) {
         toast.success("Contact deleted successfully");
