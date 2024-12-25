@@ -120,11 +120,11 @@ const AdminJobPostings = () => {
   const handleSubmit = (values, { resetForm }) => {
     const method = editJobId ? "put" : "post";
     const url = editJobId
-      ? `https://sanskaarvalley-backend.vercel.app/job-requirement/toggle-status/${editJobId}`
+      ? `https://sanskaarvalley-backend.vercel.app/job-requirement/${editJobId}`
       : "https://sanskaarvalley-backend.vercel.app/job-requirement";
 
     axios({
-      method,
+      method: method,
       url,
       data: values,
     })
@@ -194,7 +194,7 @@ const AdminJobPostings = () => {
     try {
       const updatedStatus = !currentStatus; // Toggle the current status
       await axios.put(
-        `https://sanskaarvalley-backend.vercel.app/toggle-status/${jobId}`,
+        `https://sanskaarvalley-backend.vercel.app/job-requirement/toggle-status/${jobId}`,
         {
           isActive: updatedStatus,
         }
