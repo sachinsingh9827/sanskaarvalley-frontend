@@ -1,0 +1,22 @@
+/* src/index.css or App.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Styling */
+html,
+body {
+  width: 100%;
+  /* Instead of @apply w-full */
+  overflow-x: hidden;
+  /* Instead of @apply overflow-x-hidden */
+  background-color: #F2F7FD;
+  /* For root background color */
+}
+
+/* Custom Gradient Text Class */
+.text-gradient {
+  @apply bg-gradient-to-r from-gradient-start to-gradient-end;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

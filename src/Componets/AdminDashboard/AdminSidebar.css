@@ -1,0 +1,117 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+/* General sidebar styles */
+.admin-sidebar {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #152259;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  border-right: 2px solid #ddd;
+  border-radius: 20px 0 0 20px;
+  scroll-behavior: smooth;
+  transition: width 0.3s ease;
+}
+
+/* Scrollbar styles for Webkit browsers (Chrome, Safari, Edge) */
+.admin-sidebar::-webkit-scrollbar {
+  width: 2px;
+  
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: #152259;
+  border-radius: 50px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Scrollbar styles for Firefox */
+.admin-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #152259 #f1f1f1;
+}
+
+/* Sidebar header */
+.admin-sidebar h2 {
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  transition: opacity 0.3s ease;
+}
+
+/* Sidebar links */
+.admin-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.admin-sidebar ul li a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+/* Hover effect */
+.admin-sidebar ul li a:hover {
+  color: black;
+}
+
+.admin-sidebar ul li a.active {
+  background-color: #ffdd57;
+  color: #333;
+}
+
+/* Sidebar icon and text */
+.sidebar-text {
+  margin-left: 10px;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive - Make sidebar compact on smaller screens */
+@media (max-width: 768px) {
+  /* Sidebar width */
+  .admin-sidebar {
+    width: 60px; /* Adjust the width for mobile screens */
+    padding: 10px;
+  }
+  
+  .admin-sidebar h2 {
+    display: none; /* Hide header on mobile */
+  }
+
+  .sidebar-text {
+    display: none; /* Hide text labels on mobile */
+    opacity: 0;
+  }
+  
+  /* Compact links with centered icons on mobile */
+  .admin-sidebar ul li a {
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  /* Toggle visibility of sidebar items' text when expanded */
+  .admin-sidebar.open {
+    width: 250px; /* Expanded sidebar width on mobile when toggled */
+  }
+
+  /* Show sidebar items' text when expanded */
+  .admin-sidebar.open .sidebar-text {
+    display: block;
+    opacity: 1;
+  }
+}

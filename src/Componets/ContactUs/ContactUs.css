@@ -1,0 +1,70 @@
+/* ContactUs.css */
+
+.container-fluid {
+    padding: 20px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+.text-danger {
+    color: red;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background-color: #2D88D4;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #607480;
+}
+
+.alert {
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.address-box {
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+iframe {
+    border: 0;
+    border-radius: 5px;
+}

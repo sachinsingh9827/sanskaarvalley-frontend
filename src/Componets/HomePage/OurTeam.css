@@ -1,0 +1,90 @@
+/* General styles */
+.container {
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .welcome-section {
+    background: linear-gradient(to right, #105183, #252472);
+    border-radius: 15px;
+    color: white;
+  }
+  
+  /* Team Cards Wrapper */
+  .team-cards-wrapper {
+    overflow-x: hidden; /* Prevent scrolling by default */
+    width: 100%;
+    position: relative;
+  }
+  
+  .team-cards {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+  }
+  
+  .team-card {
+    flex: 0 0 300px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+  }
+  
+  .team-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .team-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .team-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .team-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 12px 0 6px;
+  }
+  
+  .team-role {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 16px;
+  }
+  
+  /* Mobile-specific horizontal scrolling */
+  @media (max-width: 768px) {
+    .team-cards-wrapper {
+      overflow-x: auto; /* Enable horizontal scrolling */
+      scroll-snap-type: x mandatory; /* Snap each card into view */
+    }
+  
+    .team-cards {
+      gap: 12px; /* Slightly smaller gap for mobile screens */
+    }
+  
+    .team-card {
+      flex: 0 0 80%; /* Display one card at a time, with slight padding */
+      scroll-snap-align: center; /* Snap card to the center of the viewport */
+    }
+  
+    /* Smooth scrolling behavior */
+    .team-cards-wrapper {
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+  
+    .team-cards-wrapper::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for WebKit browsers */
+    }
+  }
+  

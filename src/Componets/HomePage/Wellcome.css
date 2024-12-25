@@ -1,0 +1,67 @@
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to right, #105183, #252472);
+    color: white;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+
+}
+
+.welcome-title {
+    margin-bottom: 20px;
+    animation: slideIn 0.5s ease-in-out forwards;
+    opacity: 0;
+}
+
+.welcome-message {
+    margin-bottom: 40px;
+    animation: slideIn 0.7s ease-in-out forwards;
+    opacity: 0;
+}
+
+.welcome-button-container {
+    animation: slideIn 0.9s ease-in-out forwards;
+    opacity: 0;
+}
+
+.welcome-button {
+    padding: 15px 30px;
+    cursor: pointer;
+    border: 2px solid gray;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.welcome-button:hover {
+    background-color: skyblue;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
