@@ -20,7 +20,6 @@ const Footer = () => {
       setIsAdmin(true);
     }
   }, []);
-  console.log(isAdmin);
 
   useEffect(() => {
     axios
