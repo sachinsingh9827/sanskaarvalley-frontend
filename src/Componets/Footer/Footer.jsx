@@ -20,6 +20,8 @@ const Footer = () => {
       setIsAdmin(true);
     }
   }, []);
+  console.log(isAdmin);
+
   useEffect(() => {
     axios
       .get("https://sanskaarvalley-backend.vercel.app/contact/get")
