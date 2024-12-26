@@ -4,8 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TbArrowBigRightLinesFilled } from "react-icons/tb";
-
+const BASE_URL = process.env.REACT_APP_API_URL;
 const ContactUs = () => {
   // Initial form values
   const initialValues = {
@@ -32,7 +31,7 @@ const ContactUs = () => {
   // Handle form submission
   const handleSubmit = (values, { resetForm }) => {
     axios
-      .post("https://sanskaarvalley-backend.vercel.app/user-contact", values)
+      .post(`${BASE_URL}/user-contact`, values)
       .then((response) => {
         toast.success("Your message has been sent successfully!"); // Success toast
         resetForm();

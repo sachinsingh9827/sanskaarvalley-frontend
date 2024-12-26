@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Career = () => {
   const [positions, setPositions] = useState([]);
@@ -16,7 +17,7 @@ const Career = () => {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
+          `${BASE_URL}https://sanskaarvalley-backend.vercel.app/job-requirement/active`
         );
         console.log("Job positions:", response.data.jobs);
 
