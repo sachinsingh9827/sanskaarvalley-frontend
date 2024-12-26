@@ -1,60 +1,111 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setClasses } from '../../store/teacherSlice'; // Ensure this path is correct
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import logo from "./assets/sanskaarvalley.png"; // Assuming the logo is imported
+import { logout } from "../../store/authSlice"; // Assuming there's a logout function in your redux slice
 
 const TeacherDashboard = () => {
-    const dispatch = useDispatch();
-    const classes = useSelector((state) => state.teacher.classes); // Fetch classes from Redux state
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-    useEffect(() => {
-        const fetchClasses = async () => {
-            try {
-                // Dispatch action to set classes for the teacher
-                dispatch(setClasses([
-                    { id: 1, name: 'Grade 1' },
-                    { id: 2, name: 'Grade 2' },
-                ]));
-            } catch (err) {
-                setError('Failed to load classes. Please try again later.');
-            } finally {
-                setLoading(false);
-            }
-        };
+  // Toggle sidebar visibility
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
-        fetchClasses();
-    }, [dispatch]);
+  // Handle logout
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
-    return (
-        <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-4">Teacher Dashboard</h1>
-            {loading && <p>Loading classes...</p>}
-            {error && <p className="text-red-500">{error}</p>}
-            <div>
-                <h2 className="text-2xl font-semibold">Your Classes</h2>
-                {classes && classes.length > 0 ? (
-                    <ul className="list-disc pl-5">
-                        {classes.map((classItem) => (
-                            <li key={classItem.id} className="py-1">{classItem.name}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No classes available.</p>
-                )}
-            </div>
-            <div className="mt-6">
-                <h2 className="text-2xl font-semibold">Quick Links</h2>
-                <ul className="space-y-2 mt-2">
-                    <li><a href="/manage-classes" className="text-blue-500 hover:underline">Manage Classes</a></li>
-                    <li><a href="/mark-attendance" className="text-blue-500 hover:underline">Mark Attendance</a></li>
-                    <li><a href="/assignments" className="text-blue-500 hover:underline">Manage Assignments</a></li>
-                    <li><a href="/teacher-profile" className="text-blue-500 hover:underline">View Profile</a></li>
-                    <li><a href="/logout" className="text-blue-500 hover:underline">Logout</a></li>
-                </ul>
-            </div>
+  return (
+    <div className="flex h-screen flex-col">
+      {/* Sidebar */}
+      <div
+        className={`${
+          isSidebarOpen ? "w-64" : "w-0"
+        } bg-[#152259] p-4 transition-all duration-300 h-full fixed lg:relative lg:w-64 lg:block overflow-y-auto lg:h-full`}
+      >
+        {/* Logo and Links */}
+        <div className="flex flex-col space-y-4">
+          <div className="flex items-center text-2xl font-bold text-white mb-4">
+            <Link to="/">
+              <img
+                className="max-w-[50px] h-auto rounded-full mr-2"
+                src={logo}
+                alt="logo"
+              />
+            </Link>
+            <span>Sanskaar Valley</span>
+          </div>
+
+          <nav>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/teacher/dashboard"
+                  className="block py-2 px-4 text-white hover:bg-gray-600"
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="send-notification"
+                  className="block py-2 px-4 text-white hover:bg-gray-600"
+                >
+                  Send Notification
+                </Link>
+              </li>
+              {/* Add more links as needed */}
+            </ul>
+          </nav>
+
+          <div className="mt-4">
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="text-white px-4 py-2 hover:bg-red-600 rounded-3xl"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="text-white px-4 py-2 hover:bg-sky-500 rounded-3xl"
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
-    );
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-6 ml-0 lg:ml-64 bg-gray-100 overflow-y-auto">
+        {/* Menu button for mobile screens */}
+        <button
+          onClick={toggleSidebar}
+          className="lg:hidden mb-4 py-2 px-4 bg-sky-500 text-white font-bold rounded"
+        >
+          {isSidebarOpen ? "Close Menu" : "Open Menu"}
+        </button>
+
+        {/* Main content like dashboard or other pages */}
+        <div>
+          {/* You can replace this with your Outlet for nested routing */}
+          <h1 className="text-2xl font-bold">Teacher Dashboard</h1>
+          {/* More dashboard content goes here */}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-[#152259] text-white p-4 mt-auto">
+        <p className="text-center">© 2024 Sanskaar Valley School</p>
+      </footer>
+    </div>
+  );
 };
 
 export default TeacherDashboard;

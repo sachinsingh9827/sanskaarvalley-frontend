@@ -23,7 +23,7 @@ const Login = () => {
       name: "Sachin Singh",
       email: "sachinsingh020406@gmail.com",
       password: "Sachin@98",
-      role: "student",
+      role: "teacher",
     },
     // Add your user data here
   ];

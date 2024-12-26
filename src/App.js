@@ -1,4 +1,7 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -38,6 +41,8 @@ import AddStudent from "./Componets/AdminDashboard/Students/AddStudent";
 import Career from "./Componets/HomePage/Career";
 import AdminJobPostings from "./Componets/AdminDashboard/Career/AdminJobPostings";
 import JobApplicationsPage from "./Componets/AdminDashboard/Career/JobApplicationsPage";
+import NotificationPage from "./Componets/TeacherDashboard/NotificationPage/NotificationPage";
+import TeacherProfile from "./Componets/TeacherDashboard/TeacherProfile/TeacherProfile";
 function App() {
   return (
     <Provider store={store}>
@@ -121,7 +126,12 @@ function App() {
                 <TeacherDashboard />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="dashboard" element={<TeacherProfile />} />{" "}
+            {/* Default Profile Page */}
+            <Route path="send-notification" element={<NotificationPage />} />
+            {/* Add more routes here */}
+          </Route>
 
           {/* Student Routes */}
         </Routes>

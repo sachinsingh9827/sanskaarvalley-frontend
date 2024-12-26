@@ -116,15 +116,18 @@ const FAQ = () => {
           Frequently Asked Questions
         </h1>
 
-        <button
-          onClick={() => {
-            setEditFaq(null);
-            setIsModalOpen(true);
-          }}
-          className="flex  border-2 border-sky-500 p-2 rounded hover:bg-sky-500 hover:text-white hover:border-sky-500  hover:shadow-md hover:shadow-sky-500"
-        >
-          Add FAQ
-        </button>
+        <div className="flex items-end mb-4">
+          {" "}
+          <button
+            onClick={() => {
+              setEditFaq(null);
+              setIsModalOpen(true);
+            }}
+            className="flex  border-2 border-sky-500 p-2 rounded hover:bg-sky-500 hover:text-white hover:border-sky-500  hover:shadow-md hover:shadow-sky-500 whitespace-nowrap"
+          >
+            Add FAQ
+          </button>
+        </div>
       </div>
       {/* FAQ Table */}
       {faqs.length > 0 ? (

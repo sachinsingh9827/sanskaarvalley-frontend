@@ -23,25 +23,29 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>Sanskraarvalley</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+
+    table td {
+      white-space: nowrap;
+    }
+  </style>
+
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
-  <script>
-    // Fetch manifest.json and dynamically update the app name
-    fetch('/manifest.json')
-      .then(response => response.json())
-      .then(data => {
-        // Extract and format the app name
-        const appName = data.name.replace(
-          'Sanskaarvalley',
-          '<span style="color: blue;">Sanskaarvalley</span>'
-        );
-        document.getElementById('app-name').innerHTML = appName;
-      })
-      .catch(error => console.error('Error fetching manifest.json:', error));
-  </script>
+ 
 
   <!--
       This HTML file is a template.

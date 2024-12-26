@@ -130,3 +130,6 @@
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
+table td {
+  white-space: nowrap;
+}

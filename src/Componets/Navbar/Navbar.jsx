@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import logo from "./assets/sanskaarvalley.png";
@@ -9,6 +9,18 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const location = useLocation(); // Get the current route
+  const [isAdmin, setIsAdmin] = useState();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+  useEffect(() => {
+    const data = localStorage.getItem("user");
+    console.log(JSON.parse(data));
+    if (JSON.parse(data).role === "admin") {
+      setIsAdmin(true);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -104,7 +116,7 @@ const Navbar = () => {
             Contact
           </Link>
 
-          {isAuthenticated ? (
+          {isAdmin ? (
             <button
               onClick={handleLogout}
               className="text-white px-4 hover:bg-red-600 rounded-3xl ml-4 font-semibold border-2"

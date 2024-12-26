@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   FaTachometerAlt,
@@ -83,6 +83,24 @@ const AdminSidebar = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    // Add listener on component mount
+    window.addEventListener("resize", handleResize);
+
+    // Initial check for mobile screen size
+    handleResize();
+
+    // Clean up the listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div
@@ -91,13 +109,13 @@ const AdminSidebar = () => {
       } transition-all`}
     >
       <div className="flex items-center justify-between mb-6">
-        <h2
+        {/* <h2
           className={`text-2xl font-montserrat ${
             isSidebarOpen ? "block" : "hidden"
           }`}
         >
           Admin Panel
-        </h2>
+        </h2> */}
         <button
           onClick={toggleSidebar}
           className="text-2xl md:hidden focus:outline-none"
