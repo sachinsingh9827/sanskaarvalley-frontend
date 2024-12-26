@@ -16,7 +16,7 @@ const Footer = () => {
   useEffect(() => {
     const data = localStorage.getItem("user");
     console.log(JSON.parse(data));
-    if (JSON.parse(data).role === "admin") {
+    if (JSON.parse(data)?.role === "admin") {
       setIsAdmin(true);
     }
   }, []);
