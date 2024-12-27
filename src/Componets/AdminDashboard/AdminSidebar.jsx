@@ -153,7 +153,7 @@ const AdminSidebar = () => {
               )}
             </div>
             {openDropdown === name && subItems && (
-              <ul className="mt-2">
+              <ul className="mt-2 border p-2 rounded-lg bg-gray">
                 {subItems.map((subItem) => (
                   <li key={subItem.path} className="m-2">
                     <Link
