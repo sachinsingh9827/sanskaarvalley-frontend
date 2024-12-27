@@ -120,32 +120,34 @@ const UserContactTable = () => {
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <ToastContainer position="top-right" autoClose={2000} />
-      <div className="flex justify-between border-b-2 p-2">
-        <h2 className="text-4xl text-sky-600 ">Contacts</h2>
-        <div className="flex gap-2">
-          <button
-            onClick={handleDownload}
-            className={`border-2 border-sky-500 font-montserrat text-black px-4 py-2 rounded transition-colors duration-300 ${
-              contacts.length === 0
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
-            }`}
-            disabled={contacts.length === 0}
-          >
-            Download Table as PDF
-          </button>
-          <button
-            className="text-2xl border-2 border-sky-500 font-montserrat text-gray px-4 py-2 rounded transition-colors duration-300 hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
-            onClick={fetchContacts}
-            disabled={loading} // Disable the button while loading
-          >
-            <LuRefreshCw
-              style={{
-                transition: "transform 0.3s ease ", // Smooth transition for the rotation
-                transform: rotated ? "rotate(180deg)" : "rotate(0deg)", // Rotate the icon during loading
-              }}
-            />
-          </button>
+      <div className="flex justify-between border-b-2 p-2 whitespace-nowrap">
+        <div className=" whitespace-nowrap">
+          <h2 className="text-4xl text-sky-600 ">Contacts</h2>
+          <div className="flex gap-2">
+            <button
+              onClick={handleDownload}
+              className={`border-2 border-sky-500 font-montserrat text-black px-4 py-2 rounded transition-colors duration-300 ${
+                contacts.length === 0
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
+              }`}
+              disabled={contacts.length === 0}
+            >
+              Download Table as PDF
+            </button>
+            <button
+              className="text-2xl border-2 border-sky-500 font-montserrat text-gray px-4 py-2 rounded transition-colors duration-300 hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
+              onClick={fetchContacts}
+              disabled={loading} // Disable the button while loading
+            >
+              <LuRefreshCw
+                style={{
+                  transition: "transform 0.3s ease ", // Smooth transition for the rotation
+                  transform: rotated ? "rotate(180deg)" : "rotate(0deg)", // Rotate the icon during loading
+                }}
+              />
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex flex-col">

@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
   const fetchPrivacyPolicies = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/privacy-policies?page=${currentPage}`
+        `https://sanskaarvalley-backend.vercel.app/privacy-policies?page=${currentPage}`
       );
       if (response.data && Array.isArray(response.data.privacyPolicies)) {
         setPrivacyPolicies(response.data.privacyPolicies);
@@ -82,13 +82,13 @@ const PrivacyPolicy = () => {
 
       if (editPolicy) {
         await axios.put(
-          `http://localhost:5000/privacy-policies/${editPolicy._id}`,
+          `https://sanskaarvalley-backend.vercel.app/privacy-policies/${editPolicy._id}`,
           cleanedValues
         );
         toast.success("Privacy Policy updated successfully");
       } else {
         await axios.post(
-          "http://localhost:5000/privacy-policies",
+          "https://sanskaarvalley-backend.vercel.app/privacy-policies",
           cleanedValues
         );
         toast.success("Privacy Policy added successfully");
@@ -109,7 +109,7 @@ const PrivacyPolicy = () => {
     if (!deletePolicyId) return;
     try {
       await axios.delete(
-        `http://localhost:5000/privacy-policies/${deletePolicyId}`
+        `https://sanskaarvalley-backend.vercel.app/privacy-policies/${deletePolicyId}`
       );
       toast.success("Privacy Policy deleted successfully");
       fetchPrivacyPolicies();
@@ -133,7 +133,7 @@ const PrivacyPolicy = () => {
             setEditPolicy(null);
             setIsModalOpen(true);
           }}
-          className="flex font-montserrat mb-4 px-4 py-2 border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white hover:shadow-md hover:shadow-sky-500"
+          className="flex whitespace-nowrap font-montserrat mb-4 px-4 py-2 border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white hover:shadow-md hover:shadow-sky-500"
         >
           Add Privacy Policy
         </button>

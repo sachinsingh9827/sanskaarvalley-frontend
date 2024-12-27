@@ -43,6 +43,7 @@ import AdminJobPostings from "./Componets/AdminDashboard/Career/AdminJobPostings
 import JobApplicationsPage from "./Componets/AdminDashboard/Career/JobApplicationsPage";
 import NotificationPage from "./Componets/TeacherDashboard/NotificationPage/NotificationPage";
 import TeacherProfile from "./Componets/TeacherDashboard/TeacherProfile/TeacherProfile";
+import ShelfDeclaration from "./Componets/Login/ShelfDeclaration";
 function App() {
   return (
     <Provider store={store}>
@@ -55,6 +56,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/ShelfDeclaration" element={<ShelfDeclaration />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="faq" element={<FAQ />} />

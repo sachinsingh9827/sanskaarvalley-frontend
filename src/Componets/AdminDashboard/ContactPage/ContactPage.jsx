@@ -13,17 +13,22 @@ const ContactPage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteContactId, setDeleteContactId] = useState(null);
   const [detailsModal, setDetailsModal] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const fetchContacts = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
         "https://sanskaarvalley-backend.vercel.app/contact/get"
       );
+
       setContacts(
         Array.isArray(response.data) ? response.data : [response.data]
       );
     } catch (error) {
       console.error("Error fetching contacts:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,7 +45,11 @@ const ContactPage = () => {
     setDeleteContactId(id);
     setIsDeleteModalOpen(true);
   };
-
+  if (isLoading) {
+    <div className="flex justify-center items-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+    </div>;
+  }
   const confirmDelete = async () => {
     try {
       await axios.delete(

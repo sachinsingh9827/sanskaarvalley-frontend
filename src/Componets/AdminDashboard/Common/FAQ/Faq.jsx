@@ -18,7 +18,9 @@ const FAQ = () => {
   // Fetch FAQs
   const fetchFAQs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/faq");
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/faq"
+      );
       if (response.data && Array.isArray(response.data.faqs)) {
         setFaqs(response.data.faqs);
       }
@@ -75,10 +77,16 @@ const FAQ = () => {
 
       // Proceed with the API call if the values have changed
       if (editFaq) {
-        await axios.put(`http://localhost:5000/faq/${editFaq._id}`, values);
+        await axios.put(
+          `https://sanskaarvalley-backend.vercel.app/faq/${editFaq._id}`,
+          values
+        );
         toast.success("FAQ updated successfully");
       } else {
-        await axios.post("http://localhost:5000/faq", values);
+        await axios.post(
+          "https://sanskaarvalley-backend.vercel.app/faq",
+          values
+        );
         toast.success("FAQ added successfully");
       }
 
@@ -97,7 +105,9 @@ const FAQ = () => {
   const handleDelete = async () => {
     if (!deleteFaqId) return;
     try {
-      await axios.delete(`http://localhost:5000/faq/${deleteFaqId}`);
+      await axios.delete(
+        `https://sanskaarvalley-backend.vercel.app/faq/${deleteFaqId}`
+      );
       toast.success("FAQ deleted successfully");
       fetchFAQs();
       setIsDeleteModalOpen(false);

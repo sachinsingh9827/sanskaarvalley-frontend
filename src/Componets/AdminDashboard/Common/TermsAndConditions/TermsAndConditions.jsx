@@ -20,7 +20,7 @@ const TermsAndConditions = () => {
   const fetchTerms = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/terms-and-conditions?page=${currentPage}`
+        `https://sanskaarvalley-backend.vercel.app/terms-and-conditions?page=${currentPage}`
       );
       console.log(response.data.termsAndConditions);
 
@@ -72,13 +72,13 @@ const TermsAndConditions = () => {
       }
       if (editTerm) {
         await axios.put(
-          `http://localhost:5000/terms-and-conditions/${editTerm._id}`,
+          `https://sanskaarvalley-backend.vercel.app/terms-and-conditions/${editTerm._id}`,
           cleanedValues
         );
         toast.success("Term updated successfully!");
       } else {
         await axios.post(
-          "http://localhost:5000/terms-and-conditions",
+          "https://sanskaarvalley-backend.vercel.app/terms-and-conditions",
           cleanedValues
         );
         toast.success("Term added successfully!");
@@ -98,7 +98,7 @@ const TermsAndConditions = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/terms-and-conditions/${deleteTermId}`
+        `https://sanskaarvalley-backend.vercel.app/terms-and-conditions/${deleteTermId}`
       );
       toast.success("Term deleted successfully!");
       fetchTerms();
@@ -113,7 +113,7 @@ const TermsAndConditions = () => {
   return (
     <div className="font-montserrat mx-auto px-4 py-6">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex justify-between items-center pb-4 border-b-2 border-sky-500">
+      <div className="flex justify-between items-center pb-4 border-b-2 border-sky-500 ">
         <h1 className="text-3xl text-sky-600 font-bold">
           Terms and Conditions
         </h1>
@@ -122,7 +122,7 @@ const TermsAndConditions = () => {
             setEditTerm(null);
             setIsModalOpen(true);
           }}
-          className="flex  border-2 border-sky-500 p-2 rounded hover:bg-sky-500 hover:text-white hover:border-sky-500  hover:shadow-md hover:shadow-sky-500"
+          className="flex whitespace-nowrap border-2 border-sky-500 p-2 rounded hover:bg-sky-500 hover:text-white hover:border-sky-500  hover:shadow-md hover:shadow-sky-500"
         >
           Add Term
         </button>

@@ -79,7 +79,7 @@ const Navbar = () => {
             to="/"
             className={`font-semibold transition duration-300 no-underline ${
               isActiveLink("/")
-                ? "text-black"
+                ? "text-sky-500"
                 : "text-white hover:text-gray-300"
             }`}
           >
@@ -89,7 +89,7 @@ const Navbar = () => {
             to="/about"
             className={`font-semibold transition duration-300 no-underline ${
               isActiveLink("/about")
-                ? "text-black"
+                ? "text-sky-500"
                 : "text-white hover:text-gray-300"
             }`}
           >
@@ -99,7 +99,7 @@ const Navbar = () => {
             to="/services"
             className={`font-semibold transition duration-300 no-underline ${
               isActiveLink("/services")
-                ? "text-black"
+                ? "text-sky-500"
                 : "text-white hover:text-gray-300"
             }`}
           >
@@ -109,7 +109,7 @@ const Navbar = () => {
             to="/contact"
             className={`font-semibold transition duration-300 no-underline ${
               isActiveLink("/contact")
-                ? "text-black"
+                ? "text-sky-500"
                 : "text-white hover:text-gray-300"
             }`}
           >
@@ -143,7 +143,9 @@ const Navbar = () => {
         <Link
           to="/"
           className={`block font-semibold transition duration-300 no-underline ${
-            isActiveLink("/") ? "text-black" : "text-white hover:text-green-300"
+            isActiveLink("/")
+              ? "text-sky-500"
+              : "text-white hover:text-green-300"
           }`}
         >
           Home
@@ -152,7 +154,7 @@ const Navbar = () => {
           to="/about"
           className={`block font-semibold transition duration-300 no-underline ${
             isActiveLink("/about")
-              ? "text-black"
+              ? "text-sky-500"
               : "text-white hover:text-green-300"
           }`}
         >
@@ -162,7 +164,7 @@ const Navbar = () => {
           to="/services"
           className={`block font-semibold transition duration-300 no-underline ${
             isActiveLink("/services")
-              ? "text-black"
+              ? "text-sky-500"
               : "text-white hover:text-green-300"
           }`}
         >
@@ -172,7 +174,7 @@ const Navbar = () => {
           to="/contact"
           className={`block font-semibold transition duration-300 no-underline ${
             isActiveLink("/contact")
-              ? "text-black"
+              ? "text-sky-500"
               : "text-white hover:text-green-300"
           }`}
         >

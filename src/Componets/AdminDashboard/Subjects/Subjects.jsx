@@ -70,7 +70,7 @@ const Subjects = () => {
   const fetchSubjects = async (page) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/subjects/all-subjects",
+        "https://sanskaarvalley-backend.vercel.app/subjects/all-subjects",
         {
           params: { page, limit: 10 },
         }
@@ -134,7 +134,7 @@ const Subjects = () => {
         }
 
         const response = await axios.put(
-          `http://localhost:5000/subjects/update/${editId}`,
+          `https://sanskaarvalley-backend.vercel.app/subjects/update/${editId}`,
           values
         );
         setSubjects((prev) =>
@@ -145,7 +145,7 @@ const Subjects = () => {
         toast.success("Subject updated successfully!");
       } else {
         const response = await axios.post(
-          "http://localhost:5000/subjects",
+          "https://sanskaarvalley-backend.vercel.app/subjects",
           values
         );
         setSubjects((prev) => [...prev, response.data]);
@@ -173,7 +173,9 @@ const Subjects = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/subjects/delete/${id}`);
+      await axios.delete(
+        `https://sanskaarvalley-backend.vercel.app/subjects/delete/${id}`
+      );
       setSubjects((prev) => prev.filter((subject) => subject._id !== id));
       toast.success(errorMessages.SubjectErrors.SUBJECT_DELETED_SUCCESSFULLY);
     } catch (error) {
@@ -195,7 +197,7 @@ const Subjects = () => {
     try {
       const updatedStatus = !currentStatus; // Toggle the current status
       const response = await axios.put(
-        `http://localhost:5000/subjects/toggle-status/${subjectId}`, // Update the URL as per your API endpoint
+        `https://sanskaarvalley-backend.vercel.app/subjects/toggle-status/${subjectId}`, // Update the URL as per your API endpoint
         { isActive: updatedStatus }
       );
 

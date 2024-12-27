@@ -17,6 +17,7 @@ const Login = () => {
       email: "sachinsingh.dollop@gmail.com",
       password: "Sachin@98",
       role: "admin",
+      shelfdeclaration: true,
     },
     {
       id: 2,
@@ -73,21 +74,29 @@ const Login = () => {
             name: user.name,
             email: user.email,
             role: user.role,
+            shelfdeclaration: user.shelfdeclaration,
           })
         );
 
-        switch (user.role) {
-          case "admin":
-            navigate("/admin/dashboard");
-            break;
-          case "teacher":
-            navigate("/teacher/dashboard");
-            break;
-          case "student":
-            navigate("/student/dashboard");
-            break;
-          default:
-            alert("Invalid role.");
+        // Check if shelf declaration is true
+        if (user.shelfdeclaration) {
+          // Navigate to the shelf declaration page
+          navigate("/ShelfDeclaration");
+        } else {
+          // Navigate based on user role
+          switch (user.role) {
+            case "admin":
+              navigate("/admin/dashboard");
+              break;
+            case "teacher":
+              navigate("/teacher/dashboard");
+              break;
+            case "student":
+              navigate("/student/dashboard");
+              break;
+            default:
+              alert("Invalid role.");
+          }
         }
       } else {
         formik.setFieldError("password", "Invalid email or password");

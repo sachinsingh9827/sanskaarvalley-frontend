@@ -38,9 +38,12 @@ const Notifications = () => {
   const fetchNotifications = async (page = 1) => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/notifications", {
-        params: { page, limit: 10 },
-      });
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/notifications",
+        {
+          params: { page, limit: 10 },
+        }
+      );
 
       if (response.data && Array.isArray(response.data.notifications)) {
         setNotifications(response.data.notifications);
@@ -98,7 +101,7 @@ const Notifications = () => {
       let response;
       if (editId) {
         response = await axios.put(
-          `http://localhost:5000/notifications/${editId}`,
+          `https://sanskaarvalley-backend.vercel.app/notifications/${editId}`,
           values
         );
         setNotifications((prev) =>
@@ -109,7 +112,7 @@ const Notifications = () => {
         toast.success("Notification updated successfully!");
       } else {
         response = await axios.post(
-          "http://localhost:5000/notifications",
+          "https://sanskaarvalley-backend.vercel.app/notifications",
           values
         );
         setNotifications((prev) => [...prev, response.data]);
@@ -131,7 +134,9 @@ const Notifications = () => {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/notifications/${id}`);
+      await axios.delete(
+        `https://sanskaarvalley-backend.vercel.app/notifications/${id}`
+      );
       setNotifications((prev) =>
         prev.filter((notification) => notification._id !== id)
       );
@@ -152,13 +157,13 @@ const Notifications = () => {
     setNotificationToDelete(null);
   };
 
-  // if (loading) {
-  //   return (
-  //     <div className="text-center font-montserrat mt-8">
-  //       <LinearProgress color="primary" />
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-5 mb-8 font-montserrat">

@@ -1,0 +1,38 @@
+.position-card {
+    position: relative; /* Position relative for pseudo-element */
+    overflow: hidden; /* Hide overflow for the pseudo-element */
+  }
+  
+  .position-card::before {
+    content: '';
+    position: absolute;
+    width: 10px; /* Width of the moving point */
+    height: 10px; /* Height of the moving point */
+    background-color: rgba(16, 81, 131, 1); /* Color of the moving point */
+    border-radius: 50%; /* Make it round */
+    animation: moveAround 8s linear infinite; /* Animation for moving point */
+  }
+  
+  @keyframes moveAround {
+    0% {
+      top: 0;
+      left: 0;
+    }
+    25% {
+      top: 0;
+      left: calc(100% - 10px); /* Move to the top right */
+    }
+    50% {
+      top: calc(100% - 10px); /* Move to the bottom right */
+      left: calc(100% - 10px);
+    }
+    75% {
+      top: calc(100% - 10px); /* Move to the bottom left */
+      left: 0;
+    }
+    100% {
+      top: 0; /* Move back to the top left */
+      left: 0;
+    }
+  }
+  

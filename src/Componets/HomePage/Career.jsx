@@ -5,7 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const BASE_URL = process.env.REACT_APP_API_URL;
+import "./Career.css";
 
 const Career = () => {
   const [positions, setPositions] = useState([]);
@@ -17,7 +17,7 @@ const Career = () => {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}https://sanskaarvalley-backend.vercel.app/job-requirement/active`
+          "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
         );
         console.log("Job positions:", response.data.jobs);
 
@@ -124,6 +124,21 @@ const Career = () => {
                   {position.experience} years
                 </p>
 
+                {/* Display the application deadline */}
+                <p className="text-gray-600 mt-2 font-semibold">
+                  <span className="text-[#105183]">Last Date to Apply: </span>
+                  <span
+                    className={`${
+                      new Date(position.closingDate) - new Date() <=
+                      3 * 24 * 60 * 60 * 1000 // 5 days in milliseconds
+                        ? "text-red-500" // Red color if within 5 days
+                        : "text-gray-600" // Default color
+                    }`}
+                  >
+                    {new Date(position.closingDate).toLocaleDateString()}
+                  </span>
+                </p>
+
                 <button
                   onClick={() => setSelectedPosition(position)}
                   className="w-full mt-4 font-semibold px-2 py-2 border-2 border-sky-500 hover:bg-sky-500 hover:text-white rounded-full transition-all duration-300"
@@ -134,7 +149,7 @@ const Career = () => {
                 {/* Show Details button */}
                 <button
                   onClick={() => handleShowDetails(position)} // Open modal with details
-                  className="w-full mt-4 font-semibold px-4 py-2 border-2 border-sky-500 hover:bg-sky-500 hover:text-white rounded-full transition-all duration-300"
+                  className="w-full mt-4 font-semibold px-4 py-2 border-2 border-sky-500 hover:bg-sky-500 hover:text-white rounded-full transition -all duration-300"
                 >
                   Show Details
                 </button>
@@ -150,7 +165,7 @@ const Career = () => {
           >
             Go Back
           </button>
-          <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center p-2 border border-sky rounded-lg gap-4">
             <div className="form-container max-w-lg w-full bg-white shadow-xl rounded-lg p-6">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
                 Apply for {selectedPosition.title}
@@ -252,7 +267,7 @@ const Career = () => {
             <img
               src={schoolCareerImage}
               alt="Career"
-              className="hidden md:block w-full h-auto rounded-lg"
+              className="hidden md:block w-full h-auto rounded-lg -translate-x-8"
             />
           </div>
         </div>

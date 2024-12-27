@@ -16,7 +16,7 @@ const ViewStudent = () => {
     const fetchData = async () => {
       try {
         const studentsResponse = await axios.get(
-          "http://localhost:5000/students/all-students"
+          "https://sanskaarvalley-backend.vercel.app/students/all-students"
         );
         setStudents(studentsResponse.data.students || []);
         setFilteredStudents(studentsResponse.data.students || []);
