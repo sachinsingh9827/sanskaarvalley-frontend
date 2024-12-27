@@ -13,7 +13,9 @@ const FAQ = () => {
       setLoading(true);
       setError(""); // Reset any previous errors
       try {
-        const response = await axios.get("http://localhost:5000/faq/active"); // Replace with your API endpoint
+        const response = await axios.get(
+          "https://sanskaarvalley-backend.vercel.app/faq/active"
+        ); // Replace with your API endpoint
         setFaqs(response.data.faqs); // Assuming the response contains an array of FAQs
       } catch (err) {
         setError("Failed to load FAQs. Please try again later.");
@@ -42,7 +44,10 @@ const FAQ = () => {
       </div>
 
       {loading ? (
-        <div className="text-center text-xl text-gray-500">Loading FAQs...</div>
+        <div className="flex flex-col justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+          <span className="text-gray text-lg mt-2">Loading...</span>
+        </div>
       ) : error ? (
         <div className="text-center text-xl text-red-500">
           <div className="flex flex-col items-center justify-center">
@@ -55,7 +60,7 @@ const FAQ = () => {
           </div>
         </div>
       ) : (
-        <div className="font-montserrat mx-auto px-6 py-6 space-y-8">
+        <div className="font-montserrat mx-auto px-6 py-6 space-y-8 border-2 border-gray rounded-lg">
           {/* FAQ List */}
           <div className="max-w mx-auto">
             {faqs.length === 0 ? (

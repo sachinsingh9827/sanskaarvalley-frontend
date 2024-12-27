@@ -14,7 +14,7 @@ const TermsAndConditions = () => {
       setError(""); // Reset any previous errors
       try {
         const response = await axios.get(
-          "http://localhost:5000/terms-and-conditions/active" // Replace with your API endpoint
+          "https://sanskaarvalley-backend.vercel.app/terms-and-conditions/active" // Replace with your API endpoint
         );
 
         // Debugging response data
@@ -51,8 +51,9 @@ const TermsAndConditions = () => {
 
       {/* Content Section */}
       {loading ? (
-        <div className="text-center text-xl text-gray-500">
-          Loading Terms and Conditions...
+        <div className="flex flex-col justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+          <span className="text-gray text-lg mt-2">Loading...</span>
         </div>
       ) : error ? (
         <div className="text-center text-xl text-red-500">
@@ -66,13 +67,13 @@ const TermsAndConditions = () => {
           </div>
         </div>
       ) : (
-        <div className="font-montserrat mx-auto px-6 py-6 space-y-8">
+        <div className="font-montserrat mx-auto px-6 py-6 space-y-8 border-2 border-gray rounded">
           {/* Displaying Terms and Conditions Content */}
           <div className="max-w mx-auto py-2 px-2 rounded">
             {terms.length > 0 ? (
               terms.map((term, index) => (
-                <div key={index} className="space-y-4">
-                  <h2 className="text-xl font-bold text-sky-600">
+                <div key={index} className="space-y-4 mb-6">
+                  <h2 className="text-xl font-bold text-sky-600 ">
                     {index + 1}. {term.title}
                   </h2>
                   <p className="text-base text-gray-700 select-text">
