@@ -56,7 +56,9 @@ const MainSubjectsPage = () => {
   // Fetch subjects from the server
   const fetchSubjects = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/main-subject");
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/main-subject"
+      );
       setSubjects(response.data);
     } catch (error) {
       console.error("Error fetching subjects:", error);
@@ -93,7 +95,7 @@ const MainSubjectsPage = () => {
       if (editMode) {
         // Edit existing subject
         const response = await axios.put(
-          `http://localhost:5000/main-subject/${currentSubject._id}`,
+          `https://sanskaarvalley-backend.vercel.app/main-subject/${currentSubject._id}`,
           values
         );
         toast.success(
@@ -103,7 +105,7 @@ const MainSubjectsPage = () => {
       } else {
         // Add new subject
         const response = await axios.post(
-          "http://localhost:5000/main-subject/add",
+          "https://sanskaarvalley-backend.vercel.app/main-subject/add",
           values
         );
         toast.success(
@@ -137,7 +139,7 @@ const MainSubjectsPage = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:5000/main-subject/${currentSubject._id}`
+        `https://sanskaarvalley-backend.vercel.app/main-subject/${currentSubject._id}`
       );
       toast.success("Subject deleted successfully.");
       setIsDeleteModalOpen(false);
@@ -150,7 +152,7 @@ const MainSubjectsPage = () => {
     try {
       const updatedStatus = !currentStatus; // Toggle the current status
       await axios.put(
-        `http://localhost:5000/main-subject/${subjectId}`, // Update the URL as per your API endpoint
+        `https://sanskaarvalley-backend.vercel.app/main-subject/${subjectId}`, // Update the URL as per your API endpoint
         { isActive: updatedStatus }
       );
 
