@@ -44,6 +44,7 @@ import JobApplicationsPage from "./Componets/AdminDashboard/Career/JobApplicatio
 import NotificationPage from "./Componets/TeacherDashboard/NotificationPage/NotificationPage";
 import TeacherProfile from "./Componets/TeacherDashboard/TeacherProfile/TeacherProfile";
 import ShelfDeclaration from "./Componets/Login/ShelfDeclaration";
+import studentDashboard from "./Componets/StudentDashboard/Home/studentDashboard";
 function App() {
   return (
     <Provider store={store}>
@@ -136,6 +137,17 @@ function App() {
           </Route>
 
           {/* Student Routes */}
+          <Route
+            path="/student/*"
+            element={
+              <ProtectedRoute role="student">
+                {" "}
+                <studentDashboard />{" "}
+              </ProtectedRoute>
+            }
+          >
+            {" "}
+          </Route>
         </Routes>
         <Footer />
       </Router>

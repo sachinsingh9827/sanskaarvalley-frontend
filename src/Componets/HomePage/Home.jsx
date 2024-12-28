@@ -26,12 +26,12 @@ const Home = () => {
         </div>
       </section>
       <Tabs />
-      <section id="services" className="py-12 bg-gray-100">
+      <section id="services" className="py-2 bg-gray-100">
         <div className="container mx-auto px-4">
           <OurTeam />
         </div>
       </section>
-      <section id="services" className="py-12 bg-gray-100">
+      <section id="services" className="py-4 bg-gray-100">
         <div className="container mx-auto px-4">
           <ContactUs />
         </div>
