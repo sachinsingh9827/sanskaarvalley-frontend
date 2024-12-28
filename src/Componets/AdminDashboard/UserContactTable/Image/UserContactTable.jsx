@@ -7,19 +7,18 @@ import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import Pagination from "../../../Reusable/Pagination";
 import noContacts from "./Image/No data-rafiki.svg";
-import { LuRefreshCw } from "react-icons/lu";
+import { CiSaveDown2 } from "react-icons/ci";
 const UserContactTable = () => {
   const [contacts, setContacts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contactToDelete, setContactToDelete] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [rotated, setRotated] = useState(false); // State to track if the icon is rotated
   const [loading, setLoading] = useState(false);
   // Fetch Contacts with Pagination
   const fetchContacts = async (page = 1) => {
     setLoading(true); // Set loading to true when the fetch starts
-    setRotated(true);
+
     try {
       const response = await axios.get(
         `https://sanskaarvalley-backend.vercel.app/user-contact?page=${page}`
@@ -28,12 +27,10 @@ const UserContactTable = () => {
       setContacts(data.contacts);
       setCurrentPage(data.currentPage);
       setTotalPages(data.totalPages);
+      setLoading(false); // Set loading to false when the fetch is complete
     } catch (error) {
       console.error("Error fetching contacts:", error);
       toast.error("Error fetching contact information");
-    } finally {
-      setLoading(false); // Set loading to false after the fetch completes
-      setRotated(false); // Reset rotation once the fetch is complete
     }
   };
 
@@ -116,39 +113,30 @@ const UserContactTable = () => {
 
     doc.save("sanskaarvalley-user-contacts.pdf");
   };
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+      </div>
+    );
+  }
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <ToastContainer position="top-right" autoClose={2000} />
-      <div className="flex justify-between border-b-2 p-2 whitespace-nowrap">
-        <div className=" whitespace-nowrap">
-          <h2 className="text-4xl text-sky-600 ">Contacts</h2>
-          <div className="flex gap-2">
-            <button
-              onClick={handleDownload}
-              className={`border-2 border-sky-500 font-montserrat text-black px-4 py-2 rounded transition-colors duration-300 ${
-                contacts.length === 0
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
-              }`}
-              disabled={contacts.length === 0}
-            >
-              Download Table as PDF
-            </button>
-            <button
-              className="text-2xl border-2 border-sky-500 font-montserrat text-gray px-4 py-2 rounded transition-colors duration-300 hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
-              onClick={fetchContacts}
-              disabled={loading} // Disable the button while loading
-            >
-              <LuRefreshCw
-                style={{
-                  transition: "transform 0.3s ease ", // Smooth transition for the rotation
-                  transform: rotated ? "rotate(180deg)" : "rotate(0deg)", // Rotate the icon during loading
-                }}
-              />
-            </button>
-          </div>
-        </div>
+
+      <div className="flex justify-between whitespace-nowrap border-b-2 border-sky-500 pb-2">
+        <h2 className="text-4xl text-sky-600 ">Contacts</h2>
+        <button
+          onClick={handleDownload}
+          className={`border-2 border-sky-500 font-montserrat text-black px-4 py-2 rounded transition-colors duration-300 ${
+            contacts.length === 0
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500/50"
+          }`}
+          disabled={contacts.length === 0}
+        >
+          <CiSaveDown2 />
+        </button>
       </div>
       <div className="flex flex-col">
         <div className="overflow-x-auto rounded-lg border mt-4">

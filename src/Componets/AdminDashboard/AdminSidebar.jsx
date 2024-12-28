@@ -98,6 +98,7 @@ const AdminSidebar = () => {
       }
     };
 
+    const isActiveLink = (path) => location.pathname === path;
     // Add listener on component mount
     window.addEventListener("resize", handleResize);
 

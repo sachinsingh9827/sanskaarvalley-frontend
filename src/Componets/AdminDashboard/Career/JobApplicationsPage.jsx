@@ -4,6 +4,9 @@ import { jsPDF } from "jspdf";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import noDataFound from "./Images/No data-rafiki.svg";
+import { MdDeleteForever, MdDownload } from "react-icons/md";
+
+import { CiSaveDown2 } from "react-icons/ci";
 
 // Function to download selected applications in PDF format
 const downloadPDF = (selectedApplications) => {
@@ -53,7 +56,9 @@ const JobApplicationsPage = () => {
   // Fetch all job applications
   const fetchApplications = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/career");
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/career"
+      );
       setApplications(response.data.applications);
 
       // Initialize statusMap with the current status of each application
@@ -107,7 +112,7 @@ const JobApplicationsPage = () => {
 
     try {
       const response = await axios.delete(
-        "http://localhost:5000/career/delete",
+        "https://sanskaarvalley-backend.vercel.app/career/delete",
         {
           data: { ids: selectedApplications }, // Send the array in the data field
         }
@@ -143,7 +148,7 @@ const JobApplicationsPage = () => {
   const handleStatusChange = async (id, newStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/career/status/${id}`,
+        `https://sanskaarvalley-backend.vercel.app/career/status/${id}`,
         { status: newStatus }
       );
 
@@ -177,7 +182,9 @@ const JobApplicationsPage = () => {
 
   if (loading)
     return (
-      <p className="text-center font-montserrat">Loading applications...</p>
+      <div className="flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+      </div>
     );
   if (error)
     return (
@@ -192,8 +199,8 @@ const JobApplicationsPage = () => {
       <h1 className="flex justify-center text-3xl font-bold text-[#105183]">
         Job Applications
       </h1>
-      <div className="flex justify-between items-center mt-4">
-        <div className="flex items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center mt-4 p-4 ">
+        <div className="flex items-center mb-2 md:mb-0">
           <input
             type="checkbox"
             onChange={handleSelectAll}
@@ -201,27 +208,28 @@ const JobApplicationsPage = () => {
               applications.length > 0 &&
               selectedApplications.length === applications.length
             }
+            className="form-checkbox h-5 w-5 text-blue-600"
           />
-          <span className="ml-2">Select All</span>
+          <span className="ml-2 text-sm md:text-base">Select All</span>
         </div>
-        <div>
+        <div className="flex space-x-2">
           <button
             className={
               selectedApplications.length > 0
-                ? "bg-red-500 text-white px-4 py-2 rounded-md mr-2"
-                : "bg-red-300 text-white px-4 py-2 rounded-md mr-2 cursor-not-allowed"
+                ? "bg-red-500 text-white px-4 py-2 rounded-md"
+                : "bg-red-300 text-white px-4 py-2 rounded-md cursor-not-allowed"
             }
             onClick={handleShowDeleteModal} // Show confirmation modal
             disabled={selectedApplications.length === 0} // Disable if no applications are selected
           >
-            Delete Selected
+            <MdDeleteForever />
           </button>
           <button
             className={
               shortlistedApplications.length > 0 &&
               selectedApplications.length > 0
-                ? "bg-green-500 text-white px-4 py-2 rounded-md mr-2"
-                : "bg-green-300 text-white px-4 py-2 rounded-md mr-2 cursor-not-allowed"
+                ? "bg-green-500 text-white px-4 py-2 rounded-md"
+                : "bg-green-300 text-white px-4 py-2 rounded-md cursor-not-allowed"
             }
             onClick={() => {
               // Filter shortlisted applications that are selected
@@ -233,17 +241,19 @@ const JobApplicationsPage = () => {
             }}
             disabled={selectedApplications.length === 0} // Disable if no selected applications
           >
-            Download Shortlisted (PDF)
+            <MdDownload />
           </button>
 
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-md"
             onClick={() => downloadPDF(applications)} // Download all applications
           >
-            Download All (PDF)
+            <MdDownload />
+            All
           </button>
         </div>
       </div>
+
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="overflow-x-auto rounded-lg border mt-4">
         <table className="w-full text-sm text-left text-gray-800 font-montserrat">
@@ -315,7 +325,7 @@ const JobApplicationsPage = () => {
                   <td className="">
                     {app.resume ? (
                       <a
-                        href={`http://localhost:5000/career/download/${app.resume
+                        href={`https://sanskaarvalley-backend.vercel.app/career/download/${app.resume
                           .split("/")
                           .pop()}`}
                         target="_blank"

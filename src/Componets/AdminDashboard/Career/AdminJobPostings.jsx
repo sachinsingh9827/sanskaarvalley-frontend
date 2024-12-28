@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import dataNotFound from "./Images/No data-rafiki.svg"; // Replace with your own "no data found" image
 import { FormControlLabel, styled, Switch } from "@mui/material";
 import Pagination from "../../Reusable/Pagination";
-
+import noDataFound from "./Images/No data-rafiki.svg";
 const AdminJobPostings = () => {
   const [showForm, setShowForm] = useState(false);
   const [jobPosts, setJobPosts] = useState([]);
@@ -15,6 +15,7 @@ const AdminJobPostings = () => {
   const [jobToDelete, setJobToDelete] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const IOSSwitch = styled((props) => (
     <Switch
@@ -62,11 +63,13 @@ const AdminJobPostings = () => {
     },
   }));
   const fetchPositions = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
         "https://sanskaarvalley-backend.vercel.app/job-requirement"
       );
       setJobPosts(response.data.jobs);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching positions:", error);
     }
@@ -189,6 +192,12 @@ const AdminJobPostings = () => {
       console.error("Error deleting job:", error);
     }
   };
+  if (loading)
+    return (
+      <div className="flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+      </div>
+    );
 
   const toggleActiveStatus = async (jobId, currentStatus) => {
     try {
