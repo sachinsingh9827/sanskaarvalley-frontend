@@ -15,9 +15,11 @@ const PrivacyPolicy = () => {
   const [editPolicy, setEditPolicy] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch Privacy Policies
   const fetchPrivacyPolicies = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `https://sanskaarvalley-backend.vercel.app/privacy-policies?page=${currentPage}`
@@ -26,6 +28,7 @@ const PrivacyPolicy = () => {
         setPrivacyPolicies(response.data.privacyPolicies);
         setTotalPages(response.data.pagination.totalPages); // Set total pages from the response
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching privacy policies:", error);
     }
@@ -138,7 +141,12 @@ const PrivacyPolicy = () => {
           Add Privacy Policy
         </button>
       </div>
-
+      {isLoading && (
+        <div className="flex flex-col justify-center items-center mt-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+          <span className="text-gray text-lg mt-2">Loading...</span>
+        </div>
+      )}
       {/* Privacy Policy Table */}
       {privacyPolicies.length > 0 ? (
         <div className="flex flex-col">
@@ -190,13 +198,17 @@ const PrivacyPolicy = () => {
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center">
-          <img
-            src={dataNotFound}
-            alt="No privacy policies found"
-            className="max-w-xs mb-4"
-          />
-        </div>
+        <>
+          {!isLoading && (
+            <div className="flex flex-col items-center justify-center">
+              <img
+                src={dataNotFound}
+                alt="No privacy policies found"
+                className="max-w-xs mb-4"
+              />
+            </div>
+          )}
+        </>
       )}
 
       {/* Privacy Policy Modal */}

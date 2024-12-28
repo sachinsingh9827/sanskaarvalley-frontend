@@ -14,9 +14,11 @@ const FAQ = () => {
   const [editFaq, setEditFaq] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch FAQs
   const fetchFAQs = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         "https://sanskaarvalley-backend.vercel.app/faq"
@@ -24,6 +26,7 @@ const FAQ = () => {
       if (response.data && Array.isArray(response.data.faqs)) {
         setFaqs(response.data.faqs);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching FAQs:", error);
       toast.error("Failed to fetch FAQs.");
@@ -127,7 +130,6 @@ const FAQ = () => {
         </h1>
 
         <div className="flex items-end mb-4">
-          {" "}
           <button
             onClick={() => {
               setEditFaq(null);
@@ -139,7 +141,12 @@ const FAQ = () => {
           </button>
         </div>
       </div>
-      {/* FAQ Table */}
+      {isLoading && (
+        <div className="flex flex-col justify-center items-center mt-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+          <span className="text-gray text-lg mt-2">Loading...</span>
+        </div>
+      )}
       {faqs.length > 0 ? (
         <div className="flex flex-col">
           <div className="overflow-x-auto rounded-lg border mt-4">
@@ -192,16 +199,19 @@ const FAQ = () => {
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center">
-          <img
-            src={dataNotFound}
-            alt="No notifications found"
-            className="max-w-xs mb-4"
-          />
-        </div>
+        <>
+          {!isLoading && (
+            <div className="flex flex-col items-center justify-center">
+              <img
+                src={dataNotFound}
+                alt="No notifications found"
+                className="max-w-xs mb-4"
+              />
+            </div>
+          )}
+        </>
       )}
 
-      {/* FAQ Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-sky-100 p-6 rounded shadow-lg w-1/2">
@@ -274,7 +284,6 @@ const FAQ = () => {
           </div>
         </div>
       )}
-
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

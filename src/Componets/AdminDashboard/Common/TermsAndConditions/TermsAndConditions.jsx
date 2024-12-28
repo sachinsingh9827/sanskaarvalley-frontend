@@ -15,18 +15,19 @@ const TermsAndConditions = () => {
   const [editTerm, setEditTerm] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch Terms and Conditions
   const fetchTerms = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `https://sanskaarvalley-backend.vercel.app/terms-and-conditions?page=${currentPage}`
       );
-      console.log(response.data.termsAndConditions);
-
       if (response.data && Array.isArray(response.data.termsAndConditions)) {
         setTerms(response.data.termsAndConditions);
         setTotalPages(response.data.pagination.totalPages || 1);
+        setIsLoading(false);
       } else {
         setTerms([]);
       }
@@ -127,7 +128,12 @@ const TermsAndConditions = () => {
           Add Term
         </button>
       </div>
-
+      {!isLoading && (
+        <div className="flex flex-col justify-center items-center mt-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+          <span className="text-gray text-lg mt-2">Loading...</span>
+        </div>
+      )}
       {/* Terms Table */}
       {terms.length > 0 ? (
         <div className="flex flex-col">

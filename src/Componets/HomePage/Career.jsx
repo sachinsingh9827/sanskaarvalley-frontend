@@ -19,8 +19,6 @@ const Career = () => {
         const response = await axios.get(
           "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
         );
-        console.log("Job positions:", response.data.jobs);
-
         setPositions(response.data.jobs || []);
       } catch (error) {
         console.error("Error fetching positions:", error);
@@ -55,17 +53,35 @@ const Career = () => {
 
   // Form submission handler
   const handleSubmit = async (values, { resetForm }) => {
+    console.log("Submitting values:", values); // Debugging log
+
     try {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("email", values.email);
       formData.append("mobile", values.mobile);
-      formData.append("resume", values.resume);
+
+      // Check if a resume file is selected
+      if (values.resume) {
+        formData.append("resume", values.resume);
+      } else {
+        toast.error("Resume file is required."); // Notify user if no file is selected
+        return; // Exit the function if no file is provided
+      }
+
       formData.append("coverLetter", values.coverLetter);
       formData.append("position", selectedPosition.title);
 
+      // Log the FormData object for debugging
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+
+      // Send the POST request to the backend
       const response = await axios.post(
         "https://sanskaarvalley-backend.vercel.app/career",
+        console.log("Response from server:", response.data),
+
         formData,
         {
           headers: {
@@ -74,9 +90,13 @@ const Career = () => {
         }
       );
 
+      console.log("Response from server:", response.data); // Debugging log
+
+      // Check the response from the server
       if (response.data.success) {
         toast.success("Application Submitted Successfully!");
-        resetForm();
+        resetForm(); // Reset the form fields
+        setSelectedPosition(null); // Reset selected position after submission
       } else {
         toast.info(response.data.message || "Failed to submit application.");
       }
@@ -98,7 +118,7 @@ const Career = () => {
   };
 
   return (
-    <div className="career-page font-montserrat  bg-sky-100 p-6">
+    <div className="career-page font-montserrat bg-sky-100 p-6">
       <ToastContainer />
       {!selectedPosition ? (
         <div className="positions-list max-w-4xl mx-auto">
@@ -123,33 +143,28 @@ const Career = () => {
                   <span className="text-[#105183]">Min Experience: </span>
                   {position.experience} years
                 </p>
-
-                {/* Display the application deadline */}
                 <p className="text-gray-600 mt-2 font-semibold">
                   <span className="text-[#105183]">Last Date to Apply: </span>
                   <span
                     className={`${
                       new Date(position.closingDate) - new Date() <=
-                      3 * 24 * 60 * 60 * 1000 // 5 days in milliseconds
-                        ? "text-red-500" // Red color if within 5 days
-                        : "text-gray-600" // Default color
+                      3 * 24 * 60 * 60 * 1000
+                        ? "text-red-500"
+                        : "text-gray-600"
                     }`}
                   >
                     {new Date(position.closingDate).toLocaleDateString()}
                   </span>
                 </p>
-
                 <button
                   onClick={() => setSelectedPosition(position)}
                   className="w-full mt-4 font-semibold px-2 py-2 border-2 border-sky-500 hover:bg-sky-500 hover:text-white rounded-full transition-all duration-300"
                 >
                   Apply Now
                 </button>
-
-                {/* Show Details button */}
                 <button
-                  onClick={() => handleShowDetails(position)} // Open modal with details
-                  className="w-full mt-4 font-semibold px-4 py-2 border-2 border-sky-500 hover:bg-sky-500 hover:text-white rounded-full transition -all duration-300"
+                  onClick={() => handleShowDetails(position)}
+                  className="w-full mt-4 font-semibold px-4 py-2 border-2 border-sky-500 hover:bg-sky-500 hover:text-white rounded-full transition-all duration-300"
                 >
                   Show Details
                 </button>
@@ -180,6 +195,9 @@ const Career = () => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
+                action="/upload"
+                method="POST"
+                enctype="multipart/form-data"
               >
                 {({ setFieldValue }) => (
                   <Form className="space-y-4">
@@ -280,7 +298,6 @@ const Career = () => {
             <h3 className="flex justify-center text-xl font-semibold text-[#105183]">
               {selectedPosition.title}
             </h3>
-
             <p className="mt-4">
               <span className="font-semibold text-[#105183]">Location: </span>{" "}
               {selectedPosition.location}
@@ -297,7 +314,7 @@ const Career = () => {
                 ? `${selectedPosition.experience} years`
                 : "Not mentioned"}
             </p>
-            <p className=" mt-4">
+            <p className="mt-4">
               <span className="font-semibold text-[#105183]">
                 Description:{" "}
               </span>
