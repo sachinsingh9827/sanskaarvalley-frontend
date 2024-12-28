@@ -8,6 +8,7 @@ import {
   FaBell,
   FaChevronDown,
   FaChevronUp,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { GrView } from "react-icons/gr";
 import { IoIosContact } from "react-icons/io";
@@ -46,6 +47,11 @@ const sidebarItems = [
     ],
   },
   { name: "Notifications", icon: <FaBell />, path: "notifications" },
+  {
+    name: "Calendar",
+    icon: <FaCalendarAlt />,
+    path: "calendar-management",
+  },
   { name: "Contact", icon: <IoIosContact />, path: "contact" },
   { name: "User  Contact", icon: <IoIosContact />, path: "user-contact" },
   {

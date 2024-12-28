@@ -46,6 +46,7 @@ import TeacherProfile from "./Componets/TeacherDashboard/TeacherProfile/TeacherP
 import ShelfDeclaration from "./Componets/Login/ShelfDeclaration";
 import studentDashboard from "./Componets/StudentDashboard/Home/studentDashboard";
 import DeveloperInfo from "./Componets/UserDashboard/Common/DeveloperInfo";
+import CalendarManagement from "./Componets/AdminDashboard/SchoolCalendar/CalendarManagement";
 function App() {
   return (
     <Provider store={store}>
@@ -98,6 +99,10 @@ function App() {
             <Route path="add-student" element={<AddStudent />} />
             <Route path="career" element={<AdminJobPostings />} />
             <Route path="Job-applications" element={<JobApplicationsPage />} />
+            <Route
+              path="calendar-management"
+              element={<CalendarManagement />}
+            />
             <Route
               path="*"
               element={

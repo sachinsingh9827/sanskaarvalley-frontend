@@ -1,33 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
 import "tailwindcss/tailwind.css"; // Assuming you're using Tailwind CSS for styling
 
 const LeaveCalendar = () => {
-  // Manually defined leave dates (you can replace this with your dynamic data later)
-  const leaveData = [
-    { title: "New Year's Day", date: "2024-01-01" },
-    { title: "Republic Day", date: "2024-01-26" },
-    { title: "Nawroz", date: "2024-03-21" },
-    { title: "Holi", date: "2024-03-25" },
-    { title: "Id-ul-fitr", date: "2024-04-11" },
-    { title: "Mahavir Jayanti", date: "2024-04-21" },
-    { title: "Buddha Purnima", date: "2024-05-23" },
-    { title: "Id-ul-Zuha (Bakrid)", date: "2024-06-17" },
-    { title: "Muharram", date: "2024-07-17" },
-    { title: "Independence Day", date: "2024-08-15" },
-    { title: "Janmashtami", date: "2024-08-26" },
-    { title: "Milad-un-Nabi (Prophet’s Birthday)", date: "2024-09-16" },
-    { title: "Mahatma Gandhi’s Birthday", date: "2024-10-02" },
-    { title: "Iraqi Independence Day", date: "2024-10-03" },
-    { title: "Dussehra", date: "2024-10-12" },
-    { title: "Diwali", date: "2024-10-31" },
-    { title: "Christmas Day", date: "2024-12-25" },
-  ];
-
-  // State for selected date and current month/year
+  const [leaveData, setLeaveData] = useState([]); // State for leave data
   const [date, setDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(date.getMonth());
   const [currentYear, setCurrentYear] = useState(date.getFullYear());
+
+  // Fetch leave data from the API
+  const fetchLeaveData = async () => {
+    try {
+      const response = await axios.get(
+        "https://sanskaarvalley-backend.vercel.app/school-calendar"
+      ); // Replace with your API URL
+      setLeaveData(response.data);
+    } catch (error) {
+      console.error("Error fetching leave data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLeaveData();
+  }, []);
 
   // Get the first day of the current month and the number of days in the month
   const getFirstDayOfMonth = () => {
@@ -64,16 +60,21 @@ const LeaveCalendar = () => {
     return `${currentYear}-${month}-${dayStr}`;
   };
 
-  // Check if the day is a leave date
-  const isLeaveDate = (day) => {
+  // Get all leave titles for a specific day and their types
+  const getLeaveDetails = (day) => {
+    if (day === null) return []; // Return empty array if day is null
     const formattedDate = formatDate(day);
-    return leaveData.some((leave) => leave.date === formattedDate);
+    return leaveData.filter((leave) =>
+      leave.dates.some((date) => date.split("T")[0] === formattedDate)
+    );
   };
 
   // Handle date click
   const handleDateClick = (day) => {
-    const selectedDate = new Date(currentYear, currentMonth, day);
-    setDate(selectedDate);
+    if (day) {
+      const selectedDate = new Date(currentYear, currentMonth, day);
+      setDate(selectedDate);
+    }
   };
 
   // Handle month navigation
@@ -106,19 +107,31 @@ const LeaveCalendar = () => {
           }}
         >
           <h3 className="text-3xl font-semibold text-center mb-4">
-            School Calendar
+            School Calendar{" "}
           </h3>
-          <p className="welcome-title text-sm  mb-6">
+          <p className="welcome-title text-sm mb-6">
             Stay up-to-date with all the important events, holidays, and school
             schedules at Sanskaar Valley School.
           </p>
         </div>
       </div>
 
-      <div className="container mx-auto p-4 bg-white font-montserrat border-2 border-sky-500 rounded-lg bg">
+      <div className="container mx-auto p-4 bg-white font-montserrat border-2 border-sky-500 rounded-lg">
         <h1 className="text-3xl font-bold text-center mb-6 text-gray">
           Leave Calendar for {currentYear}
         </h1>
+
+        <div className="flex items-center m-4">
+          <div className="flex items-center mr-4">
+            <div className="h-5 w-5 rounded-full bg-red-500 mr-2" />
+            <span className="text-red-700">-Holidays</span>
+          </div>
+
+          <div className="flex items-center">
+            <div className="h-5 w-5 rounded-full bg-green-500 mr-2" />
+            <span className="text-green-700">-Events</span>
+          </div>
+        </div>
 
         {/* Month Navigation */}
         <div className="flex justify-between items-center mb-4">
@@ -145,29 +158,46 @@ const LeaveCalendar = () => {
         <div className="grid grid-cols-7 gap-2 border-t-2 border-sky-500">
           {/* Days of the week header */}
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div className="text-center py-2 font-bold text-gray bor" key={day}>
+            <div className="text-center py-2 font-bold text-gray" key={day}>
               {day}
             </div>
           ))}
 
           {/* Calendar days */}
-          {createCalendar().map((day, index) => (
-            <div
-              key={index}
-              className={`text-center py-2 rounded-lg cursor-pointer ${
-                day
-                  ? isLeaveDate(day)
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-200"
-                  : ""
-              } ${day === date.getDate() ? "border-2 border-sky-500" : ""} ${
-                index % 7 === 0 ? "text-red-500" : "" // Apply red color to Sundays
-              }`}
-              onClick={() => day && handleDateClick(day)}
-            >
-              {day}
-            </div>
-          ))}
+          {createCalendar().map((day, index) => {
+            const leaveDetails = getLeaveDetails(day);
+            const isHoliday = leaveDetails.some(
+              (leave) => leave.type === "holiday"
+            );
+            const isEvent = leaveDetails.some(
+              (leave) => leave.type === "event"
+            );
+
+            return (
+              <div
+                key={index}
+                className={`text-center py-2 rounded-lg cursor-pointer ${
+                  day
+                    ? isHoliday
+                      ? "bg-red-500 text-white"
+                      : isEvent
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200"
+                    : ""
+                } ${day === date.getDate() ? "border-2 border-sky-500" : ""} ${
+                  index % 7 === 0 ? "text-red-500" : "" // Apply red color to Sundays
+                }`}
+                onClick={() => handleDateClick(day)}
+              >
+                {day}
+                {leaveDetails.length > 0 && (
+                  <div className="text-xs">
+                    {leaveDetails.map((leave) => leave.title[0]).join(", ")}...
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Display selected date */}
@@ -176,20 +206,29 @@ const LeaveCalendar = () => {
             <p className="text-lg">
               Date: {date.toLocaleDateString("en-GB")},{" "}
               {date.toLocaleDateString("en-GB", { weekday: "long" })}
-              {/* Check if the selected date is a leave date */}
-              {leaveData.some(
-                (leave) => leave.date === formatDate(date.getDate())
-              ) && (
-                <span className="ml-2 text-red-500 font-semibold">
-                  (
-                  {
-                    leaveData.find(
-                      (leave) => leave.date === formatDate(date.getDate())
-                    ).title
-                  }
-                  )
-                </span>
-              )}
+              {/* Get leave details for the selected date */}
+              {(() => {
+                const leaveDetails = getLeaveDetails(date.getDate());
+                const isHoliday = leaveDetails.some(
+                  (leave) => leave.type === "holiday"
+                );
+                const isEvent = leaveDetails.some(
+                  (leave) => leave.type === "event"
+                );
+
+                // Check if there are leave details and display them
+                if (leaveDetails.length > 0) {
+                  return (
+                    <span
+                      className={`${
+                        isHoliday ? "text-red-500" : "text-green-500"
+                      }`}
+                    >
+                      ({leaveDetails.map((leave) => leave.title).join(", ")})
+                    </span>
+                  );
+                }
+              })()}
             </p>
           ) : (
             <p className="text-lg">No Date Selected</p>

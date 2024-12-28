@@ -311,13 +311,13 @@ const Notifications = () => {
                         onClick={() => handleEdit(notification)}
                         className="mr-2 text-blue-500"
                       >
-                        <FaPen />
+                        Edit
                       </button>
                       <button
                         onClick={() => openDeleteModal(notification)}
                         className="text-red-500"
                       >
-                        <FaTrash />
+                        Delete
                       </button>
                     </td>
                   </tr>

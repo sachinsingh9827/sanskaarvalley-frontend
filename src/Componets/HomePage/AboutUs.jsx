@@ -46,7 +46,7 @@ const AboutUs = () => {
               "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
           }}
         >
-          <FaClock className="text-blue-600 text-5xl mb-4 mx-auto" />
+          <FaClock className="text-sky-600 text-5xl mb-4 mx-auto" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
             A Decade of Excellence
           </h3>
@@ -64,7 +64,7 @@ const AboutUs = () => {
               "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
           }}
         >
-          <FaUser Graduate className="text-blue-600 text-5xl mb-4 mx-auto" />
+          <FaUser Graduate className="text-sky-600 text-5xl mb-4 mx-auto" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
             Passionate Educators
           </h3>
@@ -82,7 +82,7 @@ const AboutUs = () => {
               "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
           }}
         >
-          <FaUniversity className="text-blue-600 text-5xl mb-4 mx-auto" />
+          <FaUniversity className="text-sky-600 text-5xl mb-4 mx-auto" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
             State-of-the-Art Facilities
           </h3>
