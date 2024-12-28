@@ -11,15 +11,18 @@ const Career = () => {
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch job positions on component mount
   useEffect(() => {
     const fetchPositions = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(
           "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
         );
         setPositions(response.data.jobs || []);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching positions:", error);
         toast.error("Failed to load job positions.");
@@ -120,11 +123,32 @@ const Career = () => {
   return (
     <div className="career-page font-montserrat bg-sky-100 p-6">
       <ToastContainer />
+      <h1 className="w-full p-4 text-4xl bg-[#105183] text-white rounded-lg font-semibold text-gray mb-8 text-center">
+        Current Open Positions
+      </h1>
+      {positions.length === 0 && (
+        <div className="flex flex-col justify-center items-center h-auto bg-gray-50">
+          <div className="bg-white p-8 rounded-lg shadow-md text-center">
+            {isLoading && (
+              <div className="flex justify-center items-center h-16">
+                <div className="relative">
+                  <div className="absolute w-8 h-8 bg-sky-500 animate-spin rounded"></div>
+                  <div className="absolute w-8 h-8 bg-sky-500 animate-spin rounded delay-200"></div>
+                  <div className="absolute w-8 h-8 bg-sky-500 animate-spin rounded delay-400"></div>
+                </div>
+              </div>
+            )}
+            <h2 className="text-2xl font-semibold text-[#105183] mb-2">
+              No Positions Found
+            </h2>
+            <p className="text-gray-600 mb-4">
+              Please check back later or try refreshing the page.
+            </p>
+          </div>
+        </div>
+      )}
       {!selectedPosition ? (
         <div className="positions-list max-w-4xl mx-auto">
-          <h1 className="w-full p-4 text-4xl bg-[#105183] text-white rounded-lg font-semibold text-gray mb-8 text-center">
-            Current Open Positions
-          </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {positions.map((position, index) => (
               <div
