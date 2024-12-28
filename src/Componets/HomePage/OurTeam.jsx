@@ -91,7 +91,7 @@ const OurTeam = () => {
         </div>
         <Link
           to="/careers"
-          className="border-2 border-sky-500 m-4 text-[#105183] hover:bg-sky-500 hover:text-white font-bold py-2 px-4 rounded-full w-full justify-center items-center flex"
+          className="border-2 border-sky-500 m-4 text-[#105183] hover:bg-sky-500 hover:text-white font-bold py-2 px-4 rounded-full  "
         >
           join our team
         </Link>

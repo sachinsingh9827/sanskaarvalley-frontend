@@ -52,7 +52,7 @@ const TopStudents = () => {
     <section className="px-4 sm:px-6 py-12 font-montserrat ">
       {/* Title */}
       <div className="text-center mb-12">
-        <h1 className="font-bold text-3xl sm:text-4xl text-gray-800 mb-6">
+        <h1 className="font-bold text-3xl sm:text-4xl text-gray-800 mb-6 text-[#105183]">
           Top Students of Last Year
         </h1>
         <p className="text-lg text-gray-600">

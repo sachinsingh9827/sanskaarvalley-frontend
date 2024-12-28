@@ -1,11 +1,11 @@
 import React from "react";
-import "./Wellcome.css";
+import "./Welcome.css";
 
 const WelcomePage = () => {
   return (
     <>
       {/* Top Info Bar */}
-      <div className="font-montserrat flex justify-between bg-gradient-to-r from-[#105183] to-[#252472] px-4 py-2">
+      <div className="font-montserrat flex justify-between bg-gradient-to-r from-[#105183] to-[#252472] px-4 ">
         <p className="text-white uppercase">Dise Code: 123456789</p>
         <p className="text-white uppercase">School ID: 987654321</p>
       </div>

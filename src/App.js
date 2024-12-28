@@ -45,6 +45,7 @@ import NotificationPage from "./Componets/TeacherDashboard/NotificationPage/Noti
 import TeacherProfile from "./Componets/TeacherDashboard/TeacherProfile/TeacherProfile";
 import ShelfDeclaration from "./Componets/Login/ShelfDeclaration";
 import studentDashboard from "./Componets/StudentDashboard/Home/studentDashboard";
+import DeveloperInfo from "./Componets/UserDashboard/Common/DeveloperInfo";
 function App() {
   return (
     <Provider store={store}>
@@ -64,6 +65,7 @@ function App() {
           <Route path="tabs" element={<Tabs />} />
           <Route path="leave-calendar" element={<LeaveCalendar />} />
           <Route path="careers" element={<Career />} />
+          <Route path="developerInfo" element={<DeveloperInfo />} />
           {/* <Route path="*" element={<PageNotFound />} /> */}
 
           {/* Admin Routes */}

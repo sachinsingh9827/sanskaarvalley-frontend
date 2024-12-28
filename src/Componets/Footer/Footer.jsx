@@ -147,7 +147,15 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Sanskaar Valley School. All rights
             reserved.
           </p>
-
+          <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-4 mt-2 sm:mt-0">
+            <Link
+              className="text-gray font-montserrat font-bold no-underline hover:text-sky-600"
+              to="/developerInfo"
+              onClick={handleScrollToTop}
+            >
+              DeveloperInfo
+            </Link>
+          </div>
           <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-4 mt-2 sm:mt-0">
             <Link
               className="text-gray font-montserrat font-bold no-underline hover:text-sky-600"

@@ -1,3 +1,5 @@
+/* Welcome.css */
+
 .welcome-container {
     display: flex;
     flex-direction: column;
@@ -8,7 +10,7 @@
     color: white;
     text-align: center;
     animation: fadeIn 1s ease-in-out;
-
+    padding: 20px; /* Added padding for smaller screens */
 }
 
 .welcome-title {
@@ -36,11 +38,13 @@
     color: white;
     text-decoration: none;
     font-size: 18px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
+    background-color: transparent; /* Make the button transparent initially */
 }
 
 .welcome-button:hover {
     background-color: skyblue;
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
 }
 
 /* Keyframe animations */
@@ -48,7 +52,6 @@
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -59,9 +62,21 @@
         transform: translateY(30px);
         opacity: 0;
     }
-
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .welcome-title h1 {
+        font-size: 3rem; /* Adjust title size for smaller screens */
+    }
+    .welcome-message p {
+        font-size: 1rem; /* Adjust message size for smaller screens */
+    }
+    .welcome-button {
+        padding: 10px 20px; /* Adjust button padding for smaller screens */
     }
 }
