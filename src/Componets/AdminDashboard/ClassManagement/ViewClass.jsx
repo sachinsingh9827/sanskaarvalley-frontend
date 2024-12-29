@@ -63,7 +63,9 @@ const SchoolClasses = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/class"); // Replace with your API endpoint
+        const response = await axios.get(
+          "https://sanskaarvalley-backend.vercel.app/class"
+        ); // Replace with your API endpoint
         setClasses(response.data); // Assuming the API response contains an array of classes
         setLoading(false);
       } catch (err) {
@@ -88,7 +90,9 @@ const SchoolClasses = () => {
 
   const handleDelete = (classInfo) => {
     axios
-      .delete(`http://localhost:5000/class/${classInfo._id}`)
+      .delete(
+        `https://sanskaarvalley-backend.vercel.app/class/${classInfo._id}`
+      )
       .then(() => {
         setClasses((prevClasses) =>
           prevClasses.filter((classItem) => classItem._id !== classInfo._id)
@@ -111,9 +115,12 @@ const SchoolClasses = () => {
   const toggleActiveStatus = async (classId, currentStatus) => {
     try {
       const updatedStatus = !currentStatus; // Toggle the current status
-      await axios.put(`http://localhost:5000/class/toggle-status/${classId}`, {
-        isActive: updatedStatus,
-      });
+      await axios.put(
+        `https://sanskaarvalley-backend.vercel.app/class/toggle-status/${classId}`,
+        {
+          isActive: updatedStatus,
+        }
+      );
 
       setClasses((prevClasses) =>
         prevClasses.map((classInfo) =>
@@ -211,7 +218,7 @@ const SchoolClasses = () => {
                 <td className="py-3 px-4 border-b border-gray-200">
                   <button
                     className="bg-sky-500 text-white py-2 px-4 rounded hover:bg-sky-600 mr-2 cursor-not-allowed"
-                    // onClick={() => handleEdit(classInfo)}
+                    onClick={() => handleEdit(classInfo)}
                   >
                     Edit
                   </button>
