@@ -116,7 +116,7 @@ const AdminJobPostings = () => {
 
     closingDate: Yup.date()
       .required("Closing date is required")
-      .min(new Date(), "Closing date cannot be in the past")
+      .min(new Date(), "Closing date cannot be in the past or today")
       .typeError("Invalid date format"),
   });
 
@@ -205,9 +205,11 @@ const AdminJobPostings = () => {
       await axios.put(
         `https://sanskaarvalley-backend.vercel.app/job-requirement/toggle-status/${jobId}`,
         {
-          isActive: updatedStatus,
+          // You might not need to send isActive if the backend handles it
+          // isActive: updatedStatus,
         }
       );
+      // Update the local state
       setJobPosts((prevJobs) =>
         prevJobs.map((job) =>
           job._id === jobId ? { ...job, isActive: updatedStatus } : job

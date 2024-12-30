@@ -19,6 +19,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",
     "crypto-js": "^4.2.0",
+    "date-fns": "^4.1.0",
     "dictionary-en": "^4.0.0",
     "formik": "^2.4.6",
     "html2canvas": "^1.4.1",

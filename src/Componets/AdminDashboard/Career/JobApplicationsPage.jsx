@@ -286,6 +286,7 @@ const JobApplicationsPage = () => {
                   <td className="py-2 px-2">{app.email}</td>
                   <td className="py-2 px-2">{app.mobile}</td>
                   <td className="py-2 px-2">{app.position}</td>
+
                   <td className="py-2 px-2">
                     {new Date(app.createdAt).toLocaleDateString()}
                   </td>

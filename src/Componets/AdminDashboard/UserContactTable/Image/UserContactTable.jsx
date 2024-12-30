@@ -151,6 +151,7 @@ const UserContactTable = () => {
                 <th className="px-6 py-3 font-montserrat">Email</th>
                 <th className="px-6 py-3 font-montserrat">Mobile</th>
                 <th className="px-6 py-3 font-montserrat">Subject</th>
+                <th className="px-6 py-3 font-montserrat">Date</th>
                 <th className="px-6 py-3 font-montserrat">Message</th>
                 <th className="px-6 py-3 font-montserrat">Actions</th>
               </tr>
@@ -167,6 +168,7 @@ const UserContactTable = () => {
                   <td className="px-6 py-3 font-montserrat">
                     {contact.subject}
                   </td>
+                  <td className="px-6 py-3 font-montserrat">{contact.date}</td>
                   <td className="px-6 py-2 font-montserrat">
                     {contact.message}
                   </td>
