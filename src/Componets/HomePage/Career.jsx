@@ -134,7 +134,7 @@ const Career = () => {
       {isLoading ? (
         <div className="positions-list max-w-4xl mx-auto animate-pulse m-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[...Array(2)].map((_, index) => (
+            {[...Array(1)].map((_, index) => (
               <div
                 key={index}
                 className="position-card bg-white shadow-xl rounded-lg p-6 hover:shadow-2xl transition-all"
