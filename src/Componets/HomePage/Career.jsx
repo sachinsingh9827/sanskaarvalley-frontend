@@ -6,6 +6,46 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Career.css";
 
+const CountdownTimer = ({ closingDate }) => {
+  const calculateTimeLeft = () => {
+    const difference = new Date(closingDate) - new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
+
+  return (
+    <div className="text-center">
+      {Object.keys(timeLeft).length === 0 ? (
+        <p className="text-red-500 font-semibold">Time's up!</p>
+      ) : (
+        <p className="font-montserrat text-sm">
+          {timeLeft.days}: {timeLeft.hours}: {timeLeft.minutes}:{" "}
+          {timeLeft.seconds}s
+        </p>
+      )}
+    </div>
+  );
+};
+
 const Career = () => {
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState(null);
@@ -22,11 +62,12 @@ const Career = () => {
           "https://sanskaarvalley-backend.vercel.app/job-requirement/active"
         );
         setPositions(response.data.jobs || []);
+        console.log(response.data.jobs);
 
         // Set a timer to keep loading state for a specific duration (e.g., 3 seconds)
         setTimeout(() => {
           setIsLoading(false);
-        }, 3000); // Change 3000 to the desired duration in milliseconds
+        }, 1000); // Change 3000 to the desired duration in milliseconds
       } catch (error) {
         console.error("Error fetching positions:", error);
         toast.error("Failed to load job positions.");
@@ -134,7 +175,7 @@ const Career = () => {
       {isLoading ? (
         <div className="positions-list max-w-4xl mx-auto animate-pulse m-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[...Array(1)].map((_, index) => (
+            {[...Array(2)].map((_, index) => (
               <div
                 key={index}
                 className="position-card bg-white shadow-xl rounded-lg p-6 hover:shadow-2xl transition-all"
@@ -214,6 +255,12 @@ const Career = () => {
                     {new Date(position.closingDate).toLocaleDateString()}
                   </span>
                 </p>
+                <div className="text-gray-600 mt-2 font-semibold flex items-center">
+                  <span className="text-[#105183]">Remaining Time: </span>
+                  <span className="ml-2">
+                    <CountdownTimer closingDate={position.closingDate} />
+                  </span>
+                </div>
                 <div className="flex justify-between mt-4 gap-4">
                   <button
                     onClick={() => handleApplyNow(position)}
