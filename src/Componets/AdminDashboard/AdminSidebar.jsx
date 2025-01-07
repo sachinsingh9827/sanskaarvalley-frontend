@@ -27,6 +27,15 @@ const sidebarItems = [
       { name: "View Student", path: "view-student" },
     ],
   },
+  {
+    name: "Teachers",
+    icon: <GrView />,
+    path: "register-teacher",
+    subItems: [
+      { name: "Add Teacher", path: "register-teacher" },
+      { name: "View Teacher", path: "view-teacher" },
+    ],
+  },
   { name: "Attendance", icon: <FaClipboardList />, path: "attendance" },
   {
     name: "Classes",

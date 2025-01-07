@@ -10,8 +10,8 @@ const developers = [
     contact: {
       email: "sachinsingh020406@gmail.com",
       phone: "+91 7987723186",
-      linkedin: "https://www.linkedin.com/in/yourprofile",
-      github: "https://github.com/yourusername",
+      linkedin: "https://www.linkedin.com/in/sachin-singh-a8a66327a/",
+      github: "https://github.com/sachinsingh9827/sanskaarvalley-frontend",
     },
   },
   // You can add more developers here

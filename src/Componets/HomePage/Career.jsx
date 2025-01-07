@@ -310,7 +310,10 @@ const Career = () => {
               {({ setFieldValue }) => (
                 <Form>
                   <div className="mb-4">
-                    <label htmlFor="name" className="block text-gray-700">
+                    <label
+                      htmlFor="name"
+                      className="block text-gray-700 text-sm font-bold "
+                    >
                       Full Name
                     </label>
                     <Field
@@ -327,7 +330,10 @@ const Career = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700">
+                    <label
+                      htmlFor="email"
+                      className="block text-gray-700 text-sm font-bold "
+                    >
                       Email
                     </label>
                     <Field
@@ -344,7 +350,10 @@ const Career = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="mobile" className="block text-gray-700">
+                    <label
+                      htmlFor="mobile"
+                      className="block text-gray-700 text-sm font-bold "
+                    >
                       Mobile Number
                     </label>
                     <Field
@@ -361,7 +370,10 @@ const Career = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="resume" className="block text-gray-700">
+                    <label
+                      htmlFor="resume"
+                      className="block text-gray-700 text-sm font-bold "
+                    >
                       Resume (PDF/Word)
                     </label>
                     <input
@@ -384,7 +396,7 @@ const Career = () => {
                   <div className="mb-4">
                     <label
                       htmlFor="coverLetter"
-                      className="block text-gray-700"
+                      className="block text-gray-700 text-sm font-bold"
                     >
                       Cover Letter (optional)
                     </label>
@@ -436,7 +448,7 @@ const Career = () => {
                 ? `${selectedPosition.experience} years`
                 : "Not mentioned"}
             </p>
-            <p className="mt-4">
+            <p className="mt-2">
               <span className="font-semibold text-[#105183]">
                 Description:{" "}
               </span>
@@ -445,7 +457,7 @@ const Career = () => {
             <div className="mt-6">
               <button
                 onClick={handleModalClose}
-                className="w-full font-semibold px-4 py-2 bg-sky-500 text-white rounded-full hover:bg -sky-600"
+                className="w-full font-semibold px-4 py-2 bg-[#105183] text-white rounded-full hover:bg -sky-600"
               >
                 Close
               </button>

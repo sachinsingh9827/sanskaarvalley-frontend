@@ -183,9 +183,9 @@ const Notifications = () => {
 
       {/* Modal for Create/Edit Notification */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-sky-200   rounded shadow-lg p-6 w-1/2">
-            <h3 className="flex justify-center text-xl font-montserrat mb-4">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30">
+          <div className="bg-sky-200 rounded shadow-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3">
+            <h3 className="text-center text-xl font-montserrat mb-4">
               {editId ? "Edit Notification" : "New Notification"}
             </h3>
             <Formik
@@ -195,13 +195,14 @@ const Notifications = () => {
             >
               {() => (
                 <Form>
+                  {/* Title Field */}
                   <div className="mb-4">
                     <label className="block text-black font-montserrat">
                       Title:
                       <Field
                         type="text"
                         name="title"
-                        className="px-2 font-montserrat block w-full rounded-md border"
+                        className="px-2 py-2 font-montserrat block w-full rounded-md border"
                       />
                       <ErrorMessage
                         name="title"
@@ -210,13 +211,16 @@ const Notifications = () => {
                       />
                     </label>
                   </div>
+
+                  {/* Message Field */}
                   <div className="mb-4">
                     <label className="block text-black font-montserrat">
                       Message:
                       <Field
                         as="textarea"
                         name="message"
-                        className="px-2 font-montserrat block w-full rounded-md border"
+                        rows="4"
+                        className="px-2 py-2 font-montserrat block w-full rounded-md border"
                       />
                       <ErrorMessage
                         name="message"
@@ -225,17 +229,19 @@ const Notifications = () => {
                       />
                     </label>
                   </div>
+
+                  {/* Action Buttons */}
                   <div className="flex justify-end">
                     <button
                       type="button"
                       onClick={() => setIsModalOpen(false)}
-                      className="mr-2 px-4 py-2 font-montserrat border-2 border-gray text-black rounded hover:bg-gray hover:text-white"
+                      className="mr-2 px-4 py-2 font-montserrat border-2 border-gray-400 text-black rounded hover:bg-gray-400 hover:text-white transition"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 font-montserrat border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white"
+                      className="px-4 py-2 font-montserrat border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white transition"
                     >
                       {editId ? "Update Notification" : "Send Notification"}
                     </button>

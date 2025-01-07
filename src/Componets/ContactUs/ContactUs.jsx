@@ -58,15 +58,15 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-4">
-      <div className="bg-gradient-to-r font-montserrat from-[#105183] to-[#252472] text-center text-white p-8 rounded-lg shadow-md">
+    <div className="container mx-auto py-8 px-6 font-montserrat">
+      <div className="bg-gradient-to-r  from-[#105183] to-[#252472] text-center text-white p-8 rounded-lg shadow-md">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
         <p className="welcome-title text-sm font-medium">
           Get in touch with us for any inquiries, support, or more information
           about our school and services.
         </p>
       </div>
-      <h1 className="text-center text-2xl font-semibold text-[#105183] font-montserrat mt-8">
+      <h1 className="text-center text-2xl font-semibold text-[#105183]  mt-8">
         Get in Touch – We’re Ready to Assist You!
       </h1>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -86,7 +86,7 @@ const ContactUs = () => {
                   <div className="">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-montserrat "
+                      className="block text-sm  text-sm font-bold"
                     >
                       Name
                     </label>
@@ -95,7 +95,7 @@ const ContactUs = () => {
                       id="name"
                       name="name"
                       placeholder="Enter your name"
-                      className="font-montserrat  block w-full p-2 border border-sky-500 rounded-md"
+                      className="  block w-full p-2 border border-sky-500 rounded-md"
                     />
                     <ErrorMessage
                       name="name"
@@ -108,7 +108,7 @@ const ContactUs = () => {
                   <div className="mb-4">
                     <label
                       htmlFor="email"
-                      className="block text-sm font-montserrat text-gray-700"
+                      className="block text-sm  text-gray-700 text-sm font-bold"
                     >
                       Email
                     </label>
@@ -117,7 +117,7 @@ const ContactUs = () => {
                       id="email"
                       name="email"
                       placeholder="abc@gmail.com"
-                      className="font-montserrat  block w-full p-2 border border-sky-500 rounded-md"
+                      className="  block w-full p-2 border border-sky-500 rounded-md"
                     />
                     <ErrorMessage
                       name="email"
@@ -127,12 +127,12 @@ const ContactUs = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 font-montserrat md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1  md:grid-cols-2 gap-6">
                   {/* Mobile Input */}
                   <div className="">
                     <label
                       htmlFor="mobile"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm  text-gray-700 text-sm font-bold"
                     >
                       Mobile
                     </label>
@@ -141,7 +141,7 @@ const ContactUs = () => {
                       id="mobile"
                       name="mobile"
                       placeholder="1234567890"
-                      className="font-montserrat mt-1 block w-full p-2 border border-sky-500 rounded-md"
+                      className=" mt-1 block w-full p-2 border border-sky-500 rounded-md"
                     />
                     <ErrorMessage
                       name="mobile"
@@ -154,7 +154,7 @@ const ContactUs = () => {
                   <div className="mb-4">
                     <label
                       htmlFor="subject"
-                      className="block text-sm font-montserrat text-gray-700"
+                      className="block text-sm  text-gray-700 text-sm font-bold"
                     >
                       Subject
                     </label>
@@ -163,7 +163,7 @@ const ContactUs = () => {
                       id="subject"
                       name="subject"
                       placeholder="Subject of your message"
-                      className="font-montserrat mt-1 block w-full p-2 border border-sky-500 rounded-md"
+                      className=" mt-1 block w-full p-2 border border-sky-500 rounded-md"
                     />
                     <ErrorMessage
                       name="subject"
@@ -177,7 +177,7 @@ const ContactUs = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="message"
-                    className="block text-sm font-montserrat text-gray-700"
+                    className="block  text-gray-700 text-sm font-bold"
                   >
                     Message
                   </label>
@@ -186,7 +186,7 @@ const ContactUs = () => {
                     id="message"
                     name="message"
                     placeholder="Type your message here"
-                    className="font-montserrat mt-1 block w-full p-2 border border-sky-500 rounded-md"
+                    className=" mt-1 block w-full p-2 border border-sky-500 rounded-md"
                     rows="6"
                   />
                   <ErrorMessage
@@ -200,7 +200,7 @@ const ContactUs = () => {
                 <div className="flex justify-center mb-4 text-center">
                   <button
                     type="submit"
-                    className="flex justify-center font-semibold uppercase p-2 border-2 border-sky-500 text-gray rounded-full transition-all duration-300 hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-500 w-full"
+                    className="w-full mt-4 bg-[#539bd7]  py-2 px-4 rounded-md hover:bg-[#105183] hover:text-white"
                   >
                     Submit
                   </button>
