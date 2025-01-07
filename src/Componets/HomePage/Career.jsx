@@ -37,8 +37,8 @@ const CountdownTimer = ({ closingDate }) => {
       {Object.keys(timeLeft).length === 0 ? (
         <p className="text-red-500 font-semibold">Time's up!</p>
       ) : (
-        <p className="font-montserrat text-sm">
-          {timeLeft.days}: {timeLeft.hours}: {timeLeft.minutes}:{" "}
+        <p className="font-montserrat text-sm text-[#105183]">
+          {timeLeft.days}-days: {timeLeft.hours}: {timeLeft.minutes}:{" "}
           {timeLeft.seconds}s
         </p>
       )}
@@ -52,6 +52,7 @@ const Career = () => {
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef(null); // Create a ref for the form section
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isTimeUp = new Date(positions.closingDate) - new Date() <= 0;
 
   // Fetch job positions on component mount
   useEffect(() => {
@@ -264,10 +265,16 @@ const Career = () => {
                 <div className="flex justify-between mt-4 gap-4">
                   <button
                     onClick={() => handleApplyNow(position)}
-                    className="w-full bg-[#105183] text-white font-semibold py-2 rounded-md hover:bg-[#0e3a5b]"
+                    className={`w-full bg-[#105183] text-white font-semibold py-2 rounded-md ${
+                      isTimeUp
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-[#0e3a5b]"
+                    }`}
+                    disabled={isTimeUp}
                   >
                     Apply Now
                   </button>
+
                   <button
                     onClick={() => handleViewDetails(position)}
                     className="w-full bg-[#105183] text-white font-semibold py-2 rounded-md hover:bg-[#0e3a5b]"

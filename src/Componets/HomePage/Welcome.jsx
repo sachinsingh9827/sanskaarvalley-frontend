@@ -5,9 +5,9 @@ const WelcomePage = () => {
   return (
     <>
       {/* Top Info Bar */}
-      <div className="font-montserrat flex justify-between bg-gradient-to-r from-[#105183] to-[#252472] px-4 ">
-        <p className="text-white uppercase">Dise Code: 123456789</p>
-        <p className="text-white uppercase">School ID: 987654321</p>
+      <div className="font-montserrat flex justify-between bg-gradient-to-r from-[#105183] to-[#252472] px-4 py-2 ">
+        <p className="text-white uppercase">Dise Code: 23130600413</p>
+        <p className="text-white uppercase">School ID: 13080217/74579</p>
       </div>
 
       {/* Welcome Container */}
