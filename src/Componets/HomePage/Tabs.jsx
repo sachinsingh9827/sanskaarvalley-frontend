@@ -1,6 +1,7 @@
 // Tabs.jsx
 import React, { useState } from "react";
 import LeaveCalendar from "../Reusable/LeaveCalendar"; // Import LeaveCalendar
+import OwnerDetails from "../Reusable/OwnerDetails";
 
 const Tabs = () => {
   // State to handle active tab
@@ -27,13 +28,13 @@ const Tabs = () => {
         </button>
         <button
           className={`py-2 px-4 rounded-lg font-semibold text-lg ${
-            activeTab === "other"
+            activeTab === "owner-details"
               ? "bg-sky-500 text-white"
               : "bg-gray-200 text-gray"
           } hover:bg-sky-500 hover:text-black transition duration-300`}
-          onClick={() => handleTabClick("other")}
+          onClick={() => handleTabClick("owner-details")}
         >
-          Other Tab
+          Owner Details
         </button>
       </div>
       {/* Tab Content */}
@@ -44,12 +45,7 @@ const Tabs = () => {
           </div>
         )}
 
-        {activeTab === "other" && (
-          <div className="text-center">
-            <h1 className="text-3xl font-bold mb-4">Other Tab Content</h1>
-            <p>This is a placeholder for the content of the other tab.</p>
-          </div>
-        )}
+        {activeTab === "owner-details" && <OwnerDetails />}
       </div>
     </div>
   );
