@@ -54,9 +54,9 @@ const OurTeam = () => {
           {/* Introduction Section */}
 
           <p className="welcome-title text-white text-sm  font-medium max-w-3xl mx-auto">
-            At MP Public School, we are dedicated to providing the highest level
-            of education to our students. Our team of educators brings a wealth
-            of knowledge and experience to foster a nurturing learning
+            At Sanskaar Valley School, we are dedicated to providing the highest
+            level of education to our students. Our team of educators brings a
+            wealth of knowledge and experience to foster a nurturing learning
             environment.
           </p>
         </div>

@@ -75,18 +75,21 @@ const DeveloperInfo = () => {
         {/* Modal for selected developer contact details */}
         {selectedDeveloper && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="max-w-md w-full border-2 border-[#105183] p-4 rounded-lg bg-white">
-              <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-[#105183] text-center">
-                Contact Details for {selectedDeveloper.name}
+            <div className="max-w-md w-full border border-[#105183] p-4 rounded-lg bg-white">
+              <h2 className="text-2xl sm:text-3xl  font-semibold mb-4 text-[#105183] text-center">
+                Contact Details for
+                <span className="text-sky-600"> {selectedDeveloper.name}</span>
               </h2>
-              <p className="text-base sm:text-lg text-gray-700 mb-1">
-                <strong>Email:</strong> {selectedDeveloper.contact.email}
+              <p className="text-base sm:text-lg  mb-1">
+                <strong className="text-[#105183]">Email:</strong>{" "}
+                {selectedDeveloper.contact.email}
               </p>
-              <p className="text-base sm:text-lg text-gray-700 mb-1">
-                <strong>Phone:</strong> {selectedDeveloper.contact.phone}
+              <p className="text-base sm:text-lg  mb-1">
+                <strong className="text-[#105183]">Phone:</strong>{" "}
+                {selectedDeveloper.contact.phone}
               </p>
-              <p className="text-base sm:text-lg text-gray-700 mb-1">
-                <strong>LinkedIn:</strong>{" "}
+              <p className="text-base sm:text-lg  mb-1">
+                <strong className="text-[#105183]">LinkedIn:</strong>{" "}
                 <a
                   href={selectedDeveloper.contact.linkedin}
                   target="_blank"
@@ -96,7 +99,7 @@ const DeveloperInfo = () => {
                   {selectedDeveloper.contact.linkedin}
                 </a>
               </p>
-              <p className="text-base sm:text-lg text-gray-700 mb-1">
+              <p className="text-base sm:text-lg text-[#105183] mb-1">
                 <strong>GitHub:</strong>{" "}
                 <a
                   href={selectedDeveloper.contact.github}

@@ -49,6 +49,7 @@ import DeveloperInfo from "./Componets/UserDashboard/Common/DeveloperInfo";
 import CalendarManagement from "./Componets/AdminDashboard/SchoolCalendar/CalendarManagement";
 import RegisterTeacher from "./Componets/AdminDashboard/Teacher/RegisterTeacher";
 import OwnerDetails from "./Componets/Reusable/OwnerDetails";
+import SchoolPolicies from "./Componets/Reusable/SchoolPolicies";
 function App() {
   return (
     <Provider store={store}>
@@ -70,6 +71,7 @@ function App() {
           <Route path="owner-details" element={<OwnerDetails />} />
           <Route path="careers" element={<Career />} />
           <Route path="developerInfo" element={<DeveloperInfo />} />
+          <Route path="school-policies" element={<SchoolPolicies />} />
           {/* <Route path="*" element={<PageNotFound />} /> */}
 
           {/* Admin Routes */}

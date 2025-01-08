@@ -19,7 +19,7 @@ const Tabs = () => {
         <button
           className={`py-2 px-4 rounded-lg font-semibold text-lg ${
             activeTab === "leave"
-              ? "bg-sky-500 text-white"
+              ? "bg-[#105183] text-white"
               : "bg-gray-100 text-gray-800"
           } hover:bg-sky-500 hover:text-black transition duration-300`}
           onClick={() => handleTabClick("leave")}
@@ -29,7 +29,7 @@ const Tabs = () => {
         <button
           className={`py-2 px-4 rounded-lg font-semibold text-lg ${
             activeTab === "owner-details"
-              ? "bg-sky-500 text-white"
+              ? "bg-[#105183] text-white"
               : "bg-gray-200 text-gray"
           } hover:bg-sky-500 hover:text-black transition duration-300`}
           onClick={() => handleTabClick("owner-details")}

@@ -6,6 +6,7 @@ import OurTeam from "./OurTeam";
 import ContactUs from "../ContactUs/ContactUs";
 import Tabs from "./Tabs";
 import TopStudents from "../UserDashboard/Common/TopStudents";
+import SchoolPolicies from "../Reusable/SchoolPolicies";
 const Home = () => {
   return (
     <div className="bg-sky-100">
@@ -30,6 +31,11 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <OurTeam />
         </div>
+      </section>
+      <section id="school-policies" className="py-2">
+        {/* <div className="container mx-auto px-4">
+          <SchoolPolicies />
+        </div> */}
       </section>
       <section id="services" className="py-4 bg-gray-100">
         <div className="container mx-auto px-4">

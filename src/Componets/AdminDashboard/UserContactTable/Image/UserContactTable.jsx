@@ -82,6 +82,7 @@ const UserContactTable = () => {
       "Email",
       "Mobile",
       "Subject",
+      "Date",
       "Message",
     ];
 
@@ -168,7 +169,14 @@ const UserContactTable = () => {
                   <td className="px-6 py-3 font-montserrat">
                     {contact.subject}
                   </td>
-                  <td className="px-6 py-3 font-montserrat">{contact.date}</td>
+                  <td className="px-6 py-3 font-montserrat">
+                    {new Date(contact.createdAt).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </td>
+
                   <td className="px-6 py-2 font-montserrat">
                     {contact.message}
                   </td>
