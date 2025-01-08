@@ -314,7 +314,18 @@ const CalendarManagement = () => {
                   <tr key={event._id} className="hover:bg-gray-100">
                     <td className="px-6 py-3">{index + 1}.</td>
                     <td className="px-6 py-3">{event.title}</td>
-                    <td className="px-6 py-3">{event.type}</td>
+                    <td
+                      className={`px-6 py-3 ${
+                        event.type === "holiday"
+                          ? "text-red-500 font-bold"
+                          : event.type === "event"
+                          ? "text-green-500 font-bold"
+                          : ""
+                      }`}
+                    >
+                      {event.type}
+                    </td>
+
                     <td className="px-6 py-3">
                       {event.dates
                         .map((date) => new Date(date).toLocaleDateString())

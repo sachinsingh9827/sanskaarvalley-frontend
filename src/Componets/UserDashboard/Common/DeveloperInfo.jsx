@@ -11,7 +11,7 @@ const developers = [
       email: "sachinsingh020406@gmail.com",
       phone: "+91 7987723186",
       linkedin: "https://www.linkedin.com/in/sachin-singh-a8a66327a/",
-      github: "https://github.com/sachinsingh9827/sanskaarvalley-frontend",
+      github: "",
     },
   },
   // You can add more developers here
@@ -80,36 +80,45 @@ const DeveloperInfo = () => {
                 Contact Details for
                 <span className="text-sky-600"> {selectedDeveloper.name}</span>
               </h2>
-              <p className="text-base sm:text-lg  mb-1">
+              <p className="text-base sm:text-lg mb-1">
                 <strong className="text-[#105183]">Email:</strong>{" "}
-                {selectedDeveloper.contact.email}
+                {selectedDeveloper.contact.email || "Not Available"}
               </p>
-              <p className="text-base sm:text-lg  mb-1">
+              <p className="text-base sm:text-lg mb-1">
                 <strong className="text-[#105183]">Phone:</strong>{" "}
-                {selectedDeveloper.contact.phone}
+                {selectedDeveloper.contact.phone || "Not Available"}
               </p>
-              <p className="text-base sm:text-lg  mb-1">
+              <p className="text-base sm:text-lg mb-1">
                 <strong className="text-[#105183]">LinkedIn:</strong>{" "}
-                <a
-                  href={selectedDeveloper.contact.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline break-all"
-                >
-                  {selectedDeveloper.contact.linkedin}
-                </a>
+                {selectedDeveloper.contact.linkedin ? (
+                  <a
+                    href={selectedDeveloper.contact.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline break-all"
+                  >
+                    {selectedDeveloper.contact.linkedin}
+                  </a>
+                ) : (
+                  "Not Available"
+                )}
               </p>
               <p className="text-base sm:text-lg text-[#105183] mb-1">
                 <strong>GitHub:</strong>{" "}
-                <a
-                  href={selectedDeveloper.contact.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline break-all"
-                >
-                  {selectedDeveloper.contact.github}
-                </a>
+                {selectedDeveloper.contact.github ? (
+                  <a
+                    href={selectedDeveloper.contact.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline break-all"
+                  >
+                    {selectedDeveloper.contact.github}
+                  </a>
+                ) : (
+                  "Not Available"
+                )}
               </p>
+
               <button
                 onClick={handleCloseDetails}
                 className="mt-4 w-full px-4 py-2 bg-[#105183] text-white rounded hover:bg-[#0e3d5b]"

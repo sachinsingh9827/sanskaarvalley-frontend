@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom"; // Import useLocation
-import logo from "./assets/sanskaar valley.png";
+import logo from "./assets/sanskaarvalley.png";
 import { logout } from "../../store/authSlice";
 
 const Navbar = () => {
@@ -16,7 +16,6 @@ const Navbar = () => {
   }, [location.pathname]);
   useEffect(() => {
     const data = localStorage.getItem("user");
-    console.log(JSON.parse(data));
     if (JSON.parse(data)?.role || "" === "admin") {
       setIsAdmin(true);
     }
