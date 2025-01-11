@@ -124,13 +124,13 @@ const AdminSidebar = () => {
         isSidebarOpen ? "w-64" : "w-16"
       } transition-all duration-300`}
     >
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-2">
         <h2
-          className={`text-2xl font -montserrat ${
+          className={`text-2xl font-montserrat ${
             isSidebarOpen ? "block" : "hidden"
           }`}
         >
-          Admin Panel
+          Admin
         </h2>
         <button
           onClick={toggleSidebar}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Import useLocation
 import logo from "./assets/sanskaarvalley.png";
 import { logout } from "../../store/authSlice";
 
@@ -10,6 +10,7 @@ const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const location = useLocation(); // Get the current route
   const [isAdmin, setIsAdmin] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsOpen(false);
@@ -27,6 +28,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/login");
   };
 
   // Function to determine if a link is active

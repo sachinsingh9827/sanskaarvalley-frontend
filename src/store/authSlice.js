@@ -39,8 +39,6 @@ const authSlice = createSlice({
       state.userId = null;
       state.email = null;
       state.shelfdeclaration = null;
-      localStorage.removeItem("role");
-      localStorage.removeItem("token");
       localStorage.clear();
     },
   },
