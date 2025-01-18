@@ -19,8 +19,12 @@ const ContactUs = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     email: Yup.string()
-      .email("Invalid email format")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+        "Please enter a valid Gmail address ending with @gmail.com"
+      )
       .required("Email is required"),
+
     mobile: Yup.string()
       .matches(/^[6789][0-9]{9}$/, "Mobile number not valid")
       .required("Mobile number is required"),

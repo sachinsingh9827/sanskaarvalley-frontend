@@ -214,7 +214,7 @@ const PrivacyPolicy = () => {
       {/* Privacy Policy Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-sky-100 p-6 rounded shadow-lg w-96">
+          <div className="bg-sky-100 p-6 rounded shadow-lg w-1/2">
             <h2 className="text-center text-xl text-sky-600 font-bold mb-4">
               {editPolicy ? "Edit Privacy Policy" : "Add Privacy Policy"}
             </h2>

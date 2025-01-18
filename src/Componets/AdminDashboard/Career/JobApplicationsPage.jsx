@@ -195,41 +195,29 @@ const JobApplicationsPage = () => {
     );
 
   return (
-    <div className="p-4 font-montserrat">
-      <h1 className="flex justify-center text-3xl font-bold text-[#105183]">
-        Job Applications
-      </h1>
-      <div className="flex flex-col md:flex-row justify-between items-center mt-4 p-4 ">
-        <div className="flex items-center mb-2 md:mb-0">
-          <input
-            type="checkbox"
-            onChange={handleSelectAll}
-            checked={
-              applications.length > 0 &&
-              selectedApplications.length === applications.length
-            }
-            className="form-checkbox h-5 w-5 text-blue-600"
-          />
-          <span className="ml-2 text-sm md:text-base">Select All</span>
-        </div>
+    <div className="container mx-auto pb-2 max-w-full font-montserrat">
+      <div className="flex justify-between whitespace-nowrap border-b-2 border-[#105183] p-2 mb-4 mt-2">
+        <h2 className="text-3xl text-[#105183] uppercase mt-2">
+          Job Applications
+        </h2>
         <div className="flex space-x-2">
           <button
             className={
               selectedApplications.length > 0
-                ? "bg-red-500 text-white px-4 py-2 rounded-md"
-                : "bg-red-300 text-white px-4 py-2 rounded-md cursor-not-allowed"
+                ? "bg-red-500 text-white p-2 rounded-md text-sm md:text-base"
+                : "bg-red-300 text-white rounded-md cursor-not-allowed text-sm md:text-base"
             }
             onClick={handleShowDeleteModal} // Show confirmation modal
             disabled={selectedApplications.length === 0} // Disable if no applications are selected
           >
-            <MdDeleteForever />
+            <MdDeleteForever className="text-lg md:text-xl" />
           </button>
           <button
             className={
               shortlistedApplications.length > 0 &&
               selectedApplications.length > 0
-                ? "bg-green-500 text-white px-4 py-2 rounded-md"
-                : "bg-green-300 text-white px-4 py-2 rounded-md cursor-not-allowed"
+                ? "bg-green-500 text-white p-2 rounded-md text-sm md:text-base"
+                : "bg-green-300 text-white rounded-md cursor-not-allowed text-sm md:text-base"
             }
             onClick={() => {
               // Filter shortlisted applications that are selected
@@ -241,19 +229,29 @@ const JobApplicationsPage = () => {
             }}
             disabled={selectedApplications.length === 0} // Disable if no selected applications
           >
-            <MdDownload />
+            <MdDownload className="text-lg md:text-xl" />
           </button>
 
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className="bg-blue-500 text-white p-2 rounded-md text-sm md:text-base"
             onClick={() => downloadPDF(applications)} // Download all applications
           >
-            <MdDownload />
-            All
+            <MdDownload className="text-lg md:text-xl" />
           </button>
         </div>
       </div>
-
+      <div className="flex items-center">
+        <input
+          type="checkbox"
+          onChange={handleSelectAll}
+          checked={
+            applications.length > 0 &&
+            selectedApplications.length === applications.length
+          }
+          className="form-checkbox h-4 w-4 text-blue-600"
+        />
+        <span className="ml-2 text-xs md:text-sm">Select All</span>
+      </div>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="overflow-x-auto rounded-lg border mt-4">
         <table className="w-full text-sm text-left text-gray-800 font-montserrat">
@@ -298,17 +296,9 @@ const JobApplicationsPage = () => {
                         handleStatusChange(app._id, e.target.value)
                       } // Pass app._id for correct mapping
                       className={`
-      ${
-        app.status === "Pending"
-          ? "bg-yellow-200 border-2 border-yellow-500"
-          : ""
-      }
-      ${
-        app.status === "Shortlisted"
-          ? "bg-green-200 border-2 border-green-500"
-          : ""
-      }
-      ${app.status === "Rejected" ? "bg-red-200 border-2 border-red-500" : ""}
+      ${app.status === "Pending" ? "bg-yellow-200  border-yellow-500" : ""}
+      ${app.status === "Shortlisted" ? "bg-green-200  border-green-500" : ""}
+      ${app.status === "Rejected" ? "bg-red-200  border-red-500" : ""}
       ${
         !["Pending", "Shortlisted", "Rejected"].includes(app.status)
           ? "bg-gray-200"
@@ -332,7 +322,7 @@ const JobApplicationsPage = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <button className="border-2 mr-2 border-sky-300  rounded">
+                        <button className=" mr-2 border-sky-300  rounded">
                           Download Resume
                         </button>
                       </a>

@@ -53,6 +53,8 @@ const CalendarManagement = () => {
     };
 
     try {
+      setIsLoading(true); // Set loading state to true
+
       if (editingEvent) {
         // Update existing event
         await axios.put(
@@ -68,15 +70,16 @@ const CalendarManagement = () => {
         );
         toast.success("Event added successfully");
       }
+
+      resetForm();
+      setIsModalOpen(false); // Close the modal
+      fetchEvents(currentPage); // Fetch events for the current page after submitting
+      setIsLoading(false); // Set loading state to false
     } catch (error) {
       console.error("Error saving event:", error);
       toast.error("Error saving event");
+      setIsLoading(false); // Set loading state to false in case of error
     }
-
-    // Reset form
-    resetForm();
-    setIsModalOpen(false); // Close the modal
-    fetchEvents();
   };
 
   // Handle deleting an event
@@ -110,18 +113,18 @@ const CalendarManagement = () => {
     setIsDeleteConfirmOpen(false);
     setEventToDelete(null);
   };
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+  //     </div>
+  //   );
+  // }
   return (
-    <div className="container mx-auto px-4 py-8 font-montserrat">
+    <div className="container mx-auto pb-2 font-montserrat">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex justify-between p-2 border-b-2 border-sky-500">
-        <h2 className="text-3xl font-bold text-center text-sky-600">
+      <div className="flex justify-between p-2 border-b-2 border-[#105183]">
+        <h2 className="text-3xl text-[#105183] uppercase mt-2">
           Existing Events
         </h2>
         <button
@@ -129,7 +132,7 @@ const CalendarManagement = () => {
             setIsModalOpen(true);
             setEditingEvent(null); // Reset for new event
           }}
-          className="flex font-montserrat p-2 border-2 border-sky-500 rounded hover:bg-sky-500 hover:text-white hover:border-sky-500 hover:shadow-md hover:shadow-sky-500"
+          className="border-2 border-[#105183] hover:bg-[#105183] hover:text-white p-2 rounded-lg hover:shadow-lg hover:shadow-[#105183] transition duration-300 ease-in-out"
         >
           Add New Event
         </button>
@@ -263,9 +266,13 @@ const CalendarManagement = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
             <h2 className="text-xl font-bold mb-4">Confirm Deletion</h2>
             <p>
-              Are you sure you want to delete the event "{eventToDelete?.title}
-              "?
+              Are you sure you want to delete the event{" "}
+              <span className="text-red-500 uppercase">
+                {eventToDelete?.title}
+              </span>{" "}
+              ?
             </p>
+
             <div className="flex justify-end mt-4">
               <button
                 onClick={closeDeleteConfirm}

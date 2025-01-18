@@ -76,6 +76,33 @@ const Notifications = () => {
     }
   }, [editId, notifications]);
 
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      let response;
+      if (editId) {
+        // Make sure the correct URL is used with the correct notification ID
+        response = await axios.put(
+          `https://sanskaarvalley-backend.vercel.app/notifications/${editId}`,
+          values
+        );
+        toast.success("Notification updated successfully.");
+      } else {
+        response = await axios.post(
+          "https://sanskaarvalley-backend.vercel.app/notifications",
+          values
+        );
+        toast.success("Notification created successfully.");
+      }
+      resetForm();
+      fetchNotifications(currentPage); // Refresh notifications list
+      setEditId(null); // Reset editing state
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error submitting notification:", error);
+      toast.error("Failed to submit notification.");
+    }
+  };
+
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .matches(
@@ -96,231 +123,77 @@ const Notifications = () => {
       .required(errorMessages.NotificationErrors.FORM_REQUIRED),
   });
 
-  const handleSubmit = async (values, { resetForm }) => {
-    try {
-      let response;
-      if (editId) {
-        response = await axios.put(
-          `https://sanskaarvalley-backend.vercel.app/notifications/${editId}`,
-          values
-        );
-        setNotifications((prev) =>
-          prev.map((notification) =>
-            notification._id === editId ? response.data : notification
-          )
-        );
-        toast.success("Notification updated successfully!");
-      } else {
-        response = await axios.post(
-          "https://sanskaarvalley-backend.vercel.app/notifications",
-          values
-        );
-        setNotifications((prev) => [...prev, response.data]);
-        toast.success("Notification created successfully!");
-      }
-      resetForm();
-      setIsModalOpen(false);
-      setEditId(null);
-      setTimeout(() => fetchNotifications(currentPage), 1000); // Refetch notifications after a delay
-    } catch (error) {
-      console.error("Error saving notification:", error);
-      toast.error("Failed to save notification.");
-    }
-  };
-
-  const handleEdit = (notification) => {
-    setIsModalOpen(true);
-    setEditId(notification._id);
-  };
   const handleDelete = async (id) => {
     try {
       await axios.delete(
         `https://sanskaarvalley-backend.vercel.app/notifications/${id}`
       );
-      setNotifications((prev) =>
-        prev.filter((notification) => notification._id !== id)
-      );
-      toast.success("Notification deleted successfully!");
+      toast.success("Notification deleted successfully.");
+      fetchNotifications(currentPage); // Refresh notifications list
+      setIsDeleteModalOpen(false);
     } catch (error) {
       console.error("Error deleting notification:", error);
       toast.error("Failed to delete notification.");
     }
   };
 
-  const openDeleteModal = (notification) => {
-    setNotificationToDelete(notification);
-    setIsDeleteModalOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-    setNotificationToDelete(null);
-  };
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
-      </div>
-    );
-  }
-
   return (
-    <div className="p-5 mb-8 font-montserrat">
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex justify-between border-b-2 p-2">
-        <h2 className="text-4xl  text-sky-600 ">Notifications</h2>
+    <div className="container mx-auto pb-2 font-montserrat">
+      <ToastContainer position="top-right" autoClose={2000} />
+      <div className="flex justify-between whitespace-nowrap border-b-2 border-[#105183] p-2 mb-4 mt-2">
+        <h2 className="text-3xl text-[#105183] uppercase mt-2">
+          Notifications
+        </h2>
         <button
           onClick={() => {
             setIsModalOpen(true);
-            setEditId(null);
+            setEditId(null); // Make sure editId is reset when creating new notification
           }}
-          className="flex font-montserrat p-2 border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white hover:border-sky-500  hover:shadow-md hover:shadow-sky-500"
+          className="border-2 border-[#105183] px-4 py-2 rounded transition-colors duration-300 hover:bg-[#105183] hover:text-white hover:shadow-lg hover:shadow-[#105183]/50"
         >
-          Send Notification
+          Create New Notification
         </button>
       </div>
 
-      {/* Modal for Create/Edit Notification */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30">
-          <div className="bg-sky-200 rounded shadow-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3">
-            <h3 className="text-center text-xl font-montserrat mb-4">
-              {editId ? "Edit Notification" : "New Notification"}
-            </h3>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}
-            >
-              {() => (
-                <Form>
-                  {/* Title Field */}
-                  <div className="mb-4">
-                    <label className="block text-black font-montserrat">
-                      Title:
-                      <Field
-                        type="text"
-                        name="title"
-                        className="px-2 py-2 font-montserrat block w-full rounded-md border"
-                      />
-                      <ErrorMessage
-                        name="title"
-                        component="div"
-                        className="text-red-500 text-sm"
-                      />
-                    </label>
-                  </div>
-
-                  {/* Message Field */}
-                  <div className="mb-4">
-                    <label className="block text-black font-montserrat">
-                      Message:
-                      <Field
-                        as="textarea"
-                        name="message"
-                        rows="4"
-                        className="px-2 py-2 font-montserrat block w-full rounded-md border"
-                      />
-                      <ErrorMessage
-                        name="message"
-                        component="div"
-                        className="text-red-500 text-sm"
-                      />
-                    </label>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      onClick={() => setIsModalOpen(false)}
-                      className="mr-2 px-4 py-2 font-montserrat border-2 border-gray-400 text-black rounded hover:bg-gray-400 hover:text-white transition"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-4 py-2 font-montserrat border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white transition"
-                    >
-                      {editId ? "Update Notification" : "Send Notification"}
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
+      {loading ? (
+        <div className="flex justify-center items-center ">
+          <LinearProgress color="primary" className="w-full rounded-full" />
         </div>
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {isDeleteModalOpen && notificationToDelete && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-sky-100 border-2 border-sky-500 rounded shadow-lg p-6 w-96">
-            <h3 className="text-xl font-montserrat mb-4 text-center">
-              Are you sure you want to delete this notification -
-              <span className="text-red-500 ">
-                {notificationToDelete.title}
-              </span>{" "}
-              ?
-            </h3>
-            <div className="flex justify-center space-x-4">
-              <button
-                onClick={() => {
-                  handleDelete(notificationToDelete._id);
-                  closeDeleteModal();
-                }}
-                className="px-4 py-2 bg-red-500 text-white rounded font-montserrat hover:bg-red-600"
-              >
-                Yes, Delete
-              </button>
-              <button
-                onClick={closeDeleteModal}
-                className="px-4 py-2 bg-gray-300 text-black font-montserrat border-2 border-gray rounded hover:bg-gray hover:text-white"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Notifications Table */}
-      {Array.isArray(notifications) && notifications.length > 0 ? (
-        <div className="flex flex-col">
+      ) : notifications.length > 0 ? (
+        <>
           <div className="overflow-x-auto rounded-lg border mt-4">
-            <table className="w-full text-sm font-montserrat text-left text-gray-500">
+            <table className="w-full text-sm text-left text-gray-500">
               <thead className="text-xs text-white uppercase bg-sky-500">
                 <tr>
-                  <th className="px-6 py-3">SN.</th>
-                  <th className="px-6 py-3">Title</th>
-                  <th className="px-6 py-3">Message</th>
-                  <th className="px-6 py-3">Date</th>
-                  <th className="px-6 py-3">Actions</th>
+                  <th className="px-6 py-3 font-montserrat">SN</th>
+                  <th className="px-6 py-3 font-montserrat">Title</th>
+                  <th className="px-6 py-3 font-montserrat">Date</th>
+                  <th className="px-6 py-3 font-montserrat">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {notifications.map((notification, index) => (
                   <tr key={notification._id} className="bg-white border-b">
-                    <td className="px-6 py-3 font-montserrat">{index + 1}.</td>
-                    <td className="px-6 py-3 font-montserrat">
-                      {notification.title}
-                    </td>
-                    <td className="px-6 py-3 font-montserrat">
-                      {notification.message}
-                    </td>
-                    <td className="px-6 py-3 font-montserrat">
+                    <td className="px-6 py-3">{index + 1} .</td>
+                    <td className="px-6 py-3">{notification.title}</td>
+                    <td className="px-6 py-3">
                       {formatDate(notification.createdAt)}
                     </td>
                     <td className="px-6 py-3">
                       <button
-                        onClick={() => handleEdit(notification)}
-                        className="mr-2 text-blue-500"
+                        onClick={() => {
+                          setEditId(notification._id); // Set the ID for editing
+                          setIsModalOpen(true);
+                        }}
+                        className="text-blue-500  mr-2"
                       >
                         Edit
                       </button>
                       <button
-                        onClick={() => openDeleteModal(notification)}
+                        onClick={() => {
+                          setNotificationToDelete(notification._id);
+                          setIsDeleteModalOpen(true);
+                        }}
                         className="text-red-500"
                       >
                         Delete
@@ -334,17 +207,118 @@ const Notifications = () => {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={(page) => fetchNotifications(page)}
+            onPageChange={(page) => setCurrentPage(page)}
           />
-        </div>
+        </>
       ) : (
-        <div className="flex flex-col items-center justify-center">
+        <div className="text-center font-montserrat py-4">
           <img
             src={dataNotFound}
-            alt="No notifications found"
-            className="max-w-xs mb-4"
+            alt="No data"
+            className="flex mx-auto max-w-xs mb-4"
           />
-          <p className="text-center font-montserrat">No Notifications Found</p>
+          No notifications found
+        </div>
+      )}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-sky-100 border-2 border-[#105183] rounded shadow-lg p-6 w-full sm:w-1/2 md:w-1/2 lg:w-1/2">
+            <h3 className="text-xl font-montserrat mb-4 text-center">
+              {editId ? "Edit This Notification" : "Create a New Notification"}
+            </h3>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              <Form>
+                <div className="mb-2">
+                  <label
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Title :
+                  </label>
+                  <Field
+                    type="text"
+                    id="title"
+                    name="title"
+                    className="w-full px-2 py-2 border rounded-md mt-2"
+                  />
+                  <ErrorMessage
+                    name="title"
+                    component="div"
+                    className="text-red-500 text-xs mt-1"
+                  />
+                </div>
+
+                <div className="mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Message :
+                  </label>
+                  <Field
+                    as="textarea"
+                    id="message"
+                    name="message"
+                    className="w-full px-2 py-2 border rounded-md mt-2"
+                  />
+                  <ErrorMessage
+                    name="message"
+                    component="div"
+                    className="text-red-500 text-xs mt-1"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-2 items-center p-2">
+                  <button
+                    type="button"
+                    className="border border-gray-300  px-4 py-2 rounded shadow hover:bg-gray hover:text-white"
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setEditId(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-sky-500 text-white px-6 py-2 rounded shadow hover:bg-sky-700"
+                  >
+                    {editId ? "Update" : "Create"}
+                  </button>
+                </div>
+              </Form>
+            </Formik>
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white border-2 border-[#105183] rounded shadow-lg p-6 w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+            <h3 className="text-xl text-center mb-4">Are you sure?</h3>
+            <p className="text-center mb-6">
+              You are about to delete this notification.
+            </p>
+            <div className="flex justify-between">
+              <button
+                className="bg-red-500 text-white px-6 py-2 rounded shadow hover:bg-red-700"
+                onClick={() => handleDelete(notificationToDelete)}
+              >
+                Yes, Delete
+              </button>
+              <button
+                className="border-2 border-gray-300 text-gray-500 px-4 py-2 rounded shadow hover:bg-gray-200"
+                onClick={() => setIsDeleteModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

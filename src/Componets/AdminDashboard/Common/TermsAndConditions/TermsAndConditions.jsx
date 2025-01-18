@@ -153,13 +153,13 @@ const TermsAndConditions = () => {
                     <td className="px-6 py-3">{index + 1}</td>
                     <td className="px-6 py-3">{term.title}</td>
                     <td className="px-6 py-3">{term.content}</td>
-                    <td className="px-6 py-3">
+                    <td className="px-6 py-3 ">
                       <button
                         onClick={() => {
                           setEditTerm(term);
                           setIsModalOpen(true);
                         }}
-                        className="text-blue-500 "
+                        className="text-blue-500 mr-2"
                       >
                         Edit
                       </button>
@@ -193,9 +193,9 @@ const TermsAndConditions = () => {
 
       {/* Add/Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-            <h2 className="text-center text-xl font-bold text-sky-600 mb-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-sky-100 p-6 rounded shadow-lg w-1/2">
+            <h2 className="text-center text-xl text-sky-600 font-bold mb-4">
               {editTerm ? "Edit Term" : "Add Term"}
             </h2>
             <Formik

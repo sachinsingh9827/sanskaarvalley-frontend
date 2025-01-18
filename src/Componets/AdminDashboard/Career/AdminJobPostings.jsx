@@ -232,19 +232,20 @@ const AdminJobPostings = () => {
   };
 
   return (
-    <div className="admin-job-postings p-4 font-montserrat ">
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-bold text-[#105183]">
+    <div className="container mx-auto pb-2 max-w-full font-montserrat">
+      <ToastContainer position="top-right" autoClose={2000} />
+      <div className="flex justify-between whitespace-nowrap border-b-2 border-[#105183] p-2 mb-4 mt-2">
+        <h2 className="text-3xl text-[#105183] uppercase mt-2">
           {" "}
           {editJobId ? "Update Job" : "Post New Job"}
-        </h1>
+        </h2>
         {/* Form Toggle */}
         <button
           onClick={() => {
             setShowForm(!showForm);
             setEditJobId(null);
           }}
-          className="flex font-montserrat p-2 border-2 border-sky-500 text-black rounded hover:bg-sky-500 hover:text-white hover:border-sky-500  hover:shadow-md hover:shadow-sky-500"
+          className="border-2 border-[#105183] px-4 py-2 rounded transition-colors duration-300 hover:bg-[#105183] hover:text-white hover:shadow-lg hover:shadow-[#105183]/50 flex items-center"
         >
           {showForm ? "Close Form" : "Post Job"}
         </button>

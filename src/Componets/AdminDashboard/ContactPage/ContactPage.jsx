@@ -146,10 +146,10 @@ const ContactPage = () => {
   });
 
   return (
-    <div className="container mx-auto p-6 font-montserrat">
+    <div className="container mx-auto pb-2 font-montserrat">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex justify-between border-b-2 mb-4 p-2">
-        <h2 className="text-4xl text-sky-600">
+      <div className="flex justify-between whitespace-nowrap border-b-2 border-[#105183] p-2 mb-4 mt-2">
+        <h2 className="text-3xl text-[#105183] uppercase mt-2">
           {isEditing ? "Edit Contact" : "Add New Contact"}
         </h2>
         <button
@@ -159,13 +159,19 @@ const ContactPage = () => {
             setSelectedContact(null);
             formik.resetForm();
           }}
-          className="border-2 border-sky-500 hover:bg-sky-500 hover:text-white p-2 rounded-lg hover:shadow-lg hover:shadow-sky-500"
+          className="border-2 border-[#105183] hover:bg-[#105183] hover:text-white p-2 rounded-lg hover:shadow-lg hover:shadow-[#105183] transition duration-300 ease-in-out"
         >
           {isAddingContact ? "Back to Contacts" : "Add New Contact"}
         </button>
       </div>
       {isAddingContact ? (
-        <form onSubmit={formik.handleSubmit} className="space-y-4">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="space-y-4 border p-4 rounded-lg"
+        >
+          <h4 className="text-2xl text-[#105183] mb-4 flex justify-center">
+            {isEditing ? "Edit Contact" : "Add Contact"}
+          </h4>
           {Object.keys(formik.initialValues).map((field) => (
             <div key={field} className="mb-4">
               <label className="block text-gray-700 font-semibold mb-1">
@@ -189,7 +195,7 @@ const ContactPage = () => {
           ))}
           <button
             type="submit"
-            className="flex justify-center border-2 border-sky-500 hover:bg-sky-500 hover:text-white p-2 rounded-lg mb-6"
+            className="flex justify-center border-2 border-[#105183] hover:bg-[#105183] hover:text-white p-2 rounded-lg mb-6 w-full"
           >
             {isEditing ? "Update Contact" : "Add Contact"}
           </button>
@@ -271,8 +277,8 @@ const ContactPage = () => {
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
+          <div className="bg-sky-100 p-6 rounded-lg border-2 border-[#105183]">
             <h2 className="text-lg mb-4">
               Are you sure you want to delete this contact?
             </h2>
@@ -297,20 +303,16 @@ const ContactPage = () => {
       {/* Details Modal */}
       {detailsModal && selectedContact && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg w-96 sm:w-11/12 md:w-1/2">
+          <div className="bg-white p-6 rounded-lg  mw-1/2">
             <h2 className="text-xl text-sky-600 font-semibold mb-4 text-center">
               Contact Details
             </h2>
             <div className="overflow-x-auto">
               <table className="min-w-full table-auto">
                 <thead>
-                  <tr>
-                    <th className="px-4 py-2 text-left font-semibold text-sky-700">
-                      Field
-                    </th>
-                    <th className="px-4 py-2 text-left font-semibold text-sky-700">
-                      Value
-                    </th>
+                  <tr className="bg-sky-100">
+                    <th className="px-4 py-2  text-sky-700 border">Fields</th>
+                    <th className="px-4 py-2  text-sky-700 border">Values</th>
                   </tr>
                 </thead>
                 <tbody className="">
@@ -320,10 +322,10 @@ const ContactPage = () => {
                       key !== "__v" &&
                       !key.startsWith("v") && (
                         <tr key={key}>
-                          <td className="px-4 py-2 text-gray-600 capitalize border-b">
+                          <td className="px-4 py-2 text-[#105183] capitalize border">
                             {key.replace(/([A-Z])/g, " $1")} :
                           </td>
-                          <td className="px-4 py-2 text-gray-800 border-b">
+                          <td className="px-4 py-2 text-gray-800 border">
                             {selectedContact[key]}
                           </td>
                         </tr>
