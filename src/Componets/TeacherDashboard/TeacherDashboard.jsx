@@ -1,109 +1,74 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import logo from "./assets/sanskaarvalley.png"; // Assuming the logo is imported
-import { logout } from "../../store/authSlice"; // Assuming there's a logout function in your redux slice
+import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import TeacherSidebar from "./TeacherSidebar";
+import { AiOutlineCalendar } from "react-icons/ai"; // Calendar Icon
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Date picker styles
 
 const TeacherDashboard = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date()); // State for the selected date
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false); // State to toggle calendar visibility
 
-  // Toggle sidebar visibility
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
+  // Update the date and time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer); // Cleanup the timer
+  }, []);
+
+  const formatDate = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString(undefined, options);
   };
 
-  // Handle logout
-  const handleLogout = () => {
-    dispatch(logout());
+  const formatTime = (date) => {
+    return date.toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
   };
 
   return (
-    <div className="flex h-screen flex-col">
-      {/* Sidebar */}
-      <div
-        className={`${
-          isSidebarOpen ? "w-64" : "w-0"
-        } bg-[#152259] p-4 transition-all duration-300 h-full fixed lg:relative lg:w-64 lg:block overflow-y-auto lg:h-full`}
-      >
-        {/* Logo and Links */}
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center text-2xl font-bold text-white mb-4">
-            <Link to="/">
-              <img
-                className="max-w-[50px] h-auto rounded-full mr-2"
-                src={logo}
-                alt="logo"
-              />
-            </Link>
-            <span>Sanskaar Valley</span>
-          </div>
+    <div className="flex font-sans h-screen">
+      <TeacherSidebar />
+      <div className="flex-1 p-2 bg-gray-100 overflow-y-auto">
+        <div className="flex justify-between items-center text-md font-semibold bg-white p-2 rounded shadow">
+          <span className="text-[#105183]">
+            {formatDate(currentDateTime)}
+            <button
+              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+              className="ml-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+            >
+              <AiOutlineCalendar className=" hover:text-black  " />
+            </button>
+          </span>
 
-          <nav>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/teacher/dashboard"
-                  className="block py-2 px-4 text-white hover:bg-gray-600"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="send-notification"
-                  className="block py-2 px-4 text-white hover:bg-gray-600"
-                >
-                  Send Notification
-                </Link>
-              </li>
-              {/* Add more links as needed */}
-            </ul>
-          </nav>
-
-          <div className="mt-4">
-            {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="text-white px-4 py-2 hover:bg-red-600 rounded-3xl"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                className="text-white px-4 py-2 hover:bg-sky-500 rounded-3xl"
-              >
-                Login
-              </Link>
-            )}
-          </div>
+          <span className="text-[#105183]">{formatTime(currentDateTime)}</span>
         </div>
+        <h1 className="flex justify-center text-md font-montserrat bg-[#105183] text-white p-2 rounded">
+          Welcome to the Teacher Dashboard
+        </h1>
+        {/* Calendar Popup */}
+        {isCalendarOpen && (
+          <div className="absolute z-50 bg-white p-4 shadow-lg rounded mt-2">
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              inline
+            />
+          </div>
+        )}
+        <Outlet /> {/* This will render nested routes */}
       </div>
-
-      {/* Main Content */}
-      <div className="flex-1 p-6 ml-0 lg:ml-64 bg-gray-100 overflow-y-auto">
-        {/* Menu button for mobile screens */}
-        <button
-          onClick={toggleSidebar}
-          className="lg:hidden mb-4 py-2 px-4 bg-sky-500 text-white font-bold rounded"
-        >
-          {isSidebarOpen ? "Close Menu" : "Open Menu"}
-        </button>
-
-        {/* Main content like dashboard or other pages */}
-        <div>
-          {/* You can replace this with your Outlet for nested routing */}
-          <h1 className="text-2xl font-bold">Teacher Dashboard</h1>
-          {/* More dashboard content goes here */}
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-[#152259] text-white p-4 mt-auto">
-        <p className="text-center">© 2024 Sanskaar Valley School</p>
-      </footer>
     </div>
   );
 };
