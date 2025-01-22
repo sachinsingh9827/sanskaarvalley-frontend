@@ -16,8 +16,8 @@ const sidebarItems = [
   { name: "Dashboard", icon: <FaChalkboardTeacher />, path: "dashboard" },
   { name: "Courses", icon: <FaBook />, path: "courses" },
   { name: "Attendance", icon: <FaClipboardList />, path: "attendance" },
-  { name: "Calendar", icon: <FaCalendarAlt />, path: "calendar" },
-  { name: "Students", icon: <FaUserCheck />, path: "students" },
+  { name: "Calendar", icon: <FaCalendarAlt />, path: "teacher-calendar" },
+  { name: "Students", icon: <FaUserCheck />, path: "student-list" },
   { name: "Notifications", icon: <FaBell />, path: "send-notification" },
   {
     name: "Assignments",
@@ -27,6 +27,11 @@ const sidebarItems = [
       { name: "Add Assignment", path: "add-assignment" },
       { name: "View Assignments", path: "view-assignments" },
     ],
+  },
+  {
+    name: "Terms & Conditions",
+    path: "teacher-term-condition",
+    icon: <FaBook />,
   },
 ];
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import dataNotFound from "../assets/No data-rafiki.svg";
+// NotificationModal Component
 const NotificationModal = ({
   isOpen,
   onClose,
@@ -20,12 +21,12 @@ const NotificationModal = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-sky-100 p-4 rounded shadow-lg w-11/12 md:w-1/2 border-2 border-[#105183]">
-        <h2 className="flex justify-center text-xl font-mont mb-4 text-[#105183]">
+      <div className="bg-sky-100 p-4 rounded shadow-lg w-11/12 md:w-1/3 border-2 border-[#105183]">
+        <h2 className="flex justify-center text-xl mb-4 text-[#105183]">
           {isEditing ? "Edit Notification" : "Send Notification"}
         </h2>
         <div className="mt-4">
-          <label className="block ">Select Class:</label>
+          <label className="block">Select Class:</label>
           <select
             value={selectedClass}
             onChange={(e) => setSelectedClass(e.target.value)}
@@ -77,15 +78,45 @@ const NotificationModal = ({
     </div>
   );
 };
+const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
+  if (!isOpen) return null;
 
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-4 rounded shadow-lg w-11/12 md:w-1/3 border-2 border-[#105183]">
+        <h2 className="text-xl mb-4 text-[#105183] text-center">
+          Are you sure you want to delete this notification?
+        </h2>
+        <div className="mt-4 flex justify-between">
+          <button
+            onClick={onConfirm}
+            className="bg-red-500 text-white px-4 py-2 rounded transition-colors duration-300 hover:bg-red-600"
+          >
+            Yes, Delete
+          </button>
+          <button
+            onClick={onClose}
+            className="bg-gray text-white px-4 py-2 rounded transition-colors duration-300 hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// NotificationDashboard Component
 const NotificationDashboard = () => {
   const [classes, setClasses] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false); // New state for confirmation modal
   const [selectedClass, setSelectedClass] = useState("");
   const [notificationTitle, setNotificationTitle] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
   const [editIndex, setEditIndex] = useState(null);
+  const [deleteIndex, setDeleteIndex] = useState(null); // To store the index of the notification to delete
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -115,20 +146,26 @@ const NotificationDashboard = () => {
       message: notificationMessage,
     };
 
-    if (editIndex !== null) {
-      setNotifications((prev) => {
-        const updatedNotifications = [...prev];
-        updatedNotifications[editIndex] = newNotification;
-        return updatedNotifications;
-      });
-      toast.success("Notification updated successfully!");
-    } else {
-      setNotifications((prev) => [...prev, newNotification]);
-      toast.success("Notification sent successfully!");
+    try {
+      if (editIndex !== null) {
+        // Simulate updating existing notification
+        setNotifications((prev) => {
+          const updatedNotifications = [...prev];
+          updatedNotifications[editIndex] = newNotification;
+          return updatedNotifications;
+        });
+        toast.success("Notification updated successfully!");
+      } else {
+        // Simulate sending new notification
+        setNotifications((prev) => [...prev, newNotification]);
+        toast.success("Notification sent successfully!");
+      }
+      resetForm();
+      setModalOpen(false);
+    } catch (error) {
+      console.error("Error submitting notification:", error);
+      toast.error("Failed to send notification.");
     }
-
-    resetForm();
-    setModalOpen(false);
   }, [selectedClass, notificationTitle, notificationMessage, editIndex]);
 
   const resetForm = () => {
@@ -138,61 +175,89 @@ const NotificationDashboard = () => {
     setEditIndex(null);
   };
 
+  const handleDeleteNotification = () => {
+    setNotifications((prev) => prev.filter((_, i) => i !== deleteIndex));
+    toast.success("Notification deleted successfully!");
+    setConfirmationModalOpen(false);
+  };
+
   return (
-    <div className="flex font-sans h-screen font-montserrat">
+    <div className="flex h-screen font-montserrat">
       <div className="flex-1 p-4 bg-gray-100 overflow-y-auto">
-        <h1 className="text-2xl font-montserrat text-center mb-4">
-          Notifications
-        </h1>
-        <table className="min-w-full mt-4 bg-white border border-gray-300 font-montserrat">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Class ID</th>
-              <th className="border px-4 py-2">Title</th>
-              <th className="border px-4 py-2">Message</th>
-              <th className="border px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {notifications.map((notification, index) => (
-              <tr key={index}>
-                <td className="border px-4 py-2">{index + 1} .</td>
-                <td className="border px-4 py-2">{notification.title}</td>
-                <td className="border px-4 py-2">{notification.message}</td>
-                <td className="border px-4 py-2">
-                  <button
-                    onClick={() => {
-                      setEditIndex(index);
-                      setSelectedClass(notification.classId);
-                      setNotificationTitle(notification.title);
-                      setNotificationMessage(notification.message);
-                      setModalOpen(true);
-                    }}
-                    className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 mr-2"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() =>
-                      setNotifications((prev) =>
-                        prev.filter((_, i) => i !== index)
-                      )
-                    }
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Send Notification
-        </button>
+        <div className="flex flex-col sm:flex-row justify-between p-2 border-b-2 border-[#105183]">
+          <h1 className="text-2xl text-center sm:text-left text-[#105183] mb-2 sm:mb-0">
+            Notifications
+          </h1>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="border-2 border-[#105183] px-4 py-2 rounded transition-colors duration-300 hover:bg-[#105183] hover:text-white hover:shadow-lg hover:shadow-[#105183]/50"
+          >
+            Send Notification
+          </button>
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border mt-4">
+          {notifications.length > 0 ? (
+            <table className="w-full text-sm text-left text-gray-500">
+              <thead className="text-xs text-white uppercase bg-[#105183]">
+                <tr>
+                  <th className="px-6 py-3">SN</th>
+                  <th className="px-6 py-3">Class</th>
+                  <th className="px-6 py-3">Title</th>
+                  <th className="px-6 py-3">Message</th>
+                  <th className="px-6 py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {notifications.map((notification, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="px-6 py-3">{index + 1} .</td>
+                    <td className="px-6 py-3">
+                      {classes.find(
+                        (classItem) => classItem._id === notification.classId
+                      )?.className || "Unknown Class"}
+                    </td>
+                    <td className="px-6 py-3">{notification.title}</td>
+                    <td className="px-6 py-3">{notification.message}</td>
+                    <td className="px-6 py-3">
+                      <button
+                        onClick={() => {
+                          setEditIndex(index);
+                          setSelectedClass(notification.classId);
+                          setNotificationTitle(notification.title);
+                          setNotificationMessage(notification.message);
+                          setModalOpen(true);
+                        }}
+                        className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 mr-2"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => {
+                          setDeleteIndex(index);
+                          setConfirmationModalOpen(true);
+                        }}
+                        className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="text-center font-montserrat py-2">
+              <img
+                src={dataNotFound}
+                alt="No data"
+                className="flex mx-auto max-w-xs "
+              />
+              No notifications found
+            </div>
+          )}
+        </div>
+
         <NotificationModal
           isOpen={modalOpen}
           onClose={() => {
@@ -209,6 +274,14 @@ const NotificationDashboard = () => {
           setNotificationMessage={setNotificationMessage}
           isEditing={editIndex !== null}
         />
+
+        {/* Confirmation Modal */}
+        <DeleteConfirmationModal
+          isOpen={confirmationModalOpen}
+          onClose={() => setConfirmationModalOpen(false)}
+          onConfirm={handleDeleteNotification}
+        />
+
         <ToastContainer />
       </div>
     </div>

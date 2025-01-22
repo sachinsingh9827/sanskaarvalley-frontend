@@ -6,6 +6,30 @@ const PrivacyPolicy = () => {
   const [content, setContent] = useState([]); // Use an empty array initially
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [language, setLanguage] = useState("en"); // Default language is English
+
+  // Translation function
+  const translateText = async (text, targetLang) => {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(
+      text
+    )}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error("Translation API failed");
+      }
+      const data = await res.json();
+      return data[0][0][0];
+    } catch (error) {
+      console.error("Error during translation:", error);
+      return text; // Return original text if there was an error
+    }
+  };
+
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    setLanguage(selectedLanguage);
+  };
 
   // Fetch Privacy Policy content from the API
   useEffect(() => {
@@ -23,7 +47,31 @@ const PrivacyPolicy = () => {
           response.data.activePolicies &&
           response.data.activePolicies.length > 0
         ) {
-          setContent(response.data.activePolicies); // Set the entire array
+          const policies = response.data.activePolicies;
+
+          // Translate content if the language is not English
+          if (language !== "en") {
+            const translatedPolicies = await Promise.all(
+              policies.map(async (policy) => {
+                const translatedTitle = await translateText(
+                  policy.title,
+                  language
+                );
+                const translatedContent = await translateText(
+                  policy.content,
+                  language
+                );
+                return {
+                  ...policy,
+                  title: translatedTitle,
+                  content: translatedContent,
+                };
+              })
+            );
+            setContent(translatedPolicies);
+          } else {
+            setContent(policies); // Set original content for English
+          }
         } else {
           setError("No active policies available.");
         }
@@ -35,16 +83,28 @@ const PrivacyPolicy = () => {
     };
 
     fetchPrivacyPolicy();
-  }, []); // Empty dependency array means it will run once when the component mounts
+  }, [language]); // Adding language to dependency array to refetch when language changes
 
   return (
     <div className="container mx-auto px-4 py-4">
       <div className="welcome-title bg-gradient-to-r font-montserrat from-[#105183] to-[#252472] text-center text-white p-8 rounded-lg shadow-md mb-8">
-        <h1 className="text-4xl font-bold  mb-6">Privacy Policy</h1>
+        <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
         <p className="font-montserrat text-gray-600 text-xl max-w-2xl mx-auto">
           Your privacy is important to us. Below is our Privacy Policy
           explaining how we handle your data.
         </p>
+      </div>
+
+      {/* Language Selector */}
+      <div className="flex justify-end mb-4">
+        <select
+          className="text-lg border border-[#105183] rounded-full p-2 hover:bg-[#105183] hover:text-white"
+          value={language}
+          onChange={handleLanguageChange}
+        >
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
       </div>
 
       {loading ? (
@@ -73,7 +133,6 @@ const PrivacyPolicy = () => {
                   <h2 className="text-xl font-bold text-sky-600">
                     {index + 1}. {policy.title}
                   </h2>
-                  {/* Tailwind's select-text class to allow text selection */}
                   <p className="text-base text-gray-700 select-text">
                     {policy.content}
                   </p>

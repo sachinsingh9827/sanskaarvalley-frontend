@@ -50,6 +50,12 @@ import CalendarManagement from "./Componets/AdminDashboard/SchoolCalendar/Calend
 import RegisterTeacher from "./Componets/AdminDashboard/Teacher/RegisterTeacher";
 import OwnerDetails from "./Componets/Reusable/OwnerDetails";
 import SchoolPolicies from "./Componets/Reusable/SchoolPolicies";
+import TeacherCalendar from "./Componets/TeacherDashboard/TeacherCalendar/TeacherCalendar";
+import StudentList from "./Componets/TeacherDashboard/Students/Students";
+import AttendancePage from "./Componets/TeacherDashboard/Attendance/Attendance";
+import Courses from "./Componets/TeacherDashboard/Courses/Courses";
+import AddAssignment from "./Componets/TeacherDashboard/AddAssignment/AddAssignment";
+import TeacherTermsAndConditions from "./Componets/TeacherDashboard/TeacherTermsAndConditions/TeacherTermsAndConditions";
 function App() {
   return (
     <Provider store={store}>
@@ -146,6 +152,15 @@ function App() {
             <Route path="dashboard" element={<TeacherProfile />} />{" "}
             {/* Default Profile Page */}
             <Route path="send-notification" element={<NotificationPage />} />
+            <Route path="teacher-calendar" element={<TeacherCalendar />} />
+            <Route path="student-list" element={<StudentList />} />
+            <Route path="attendance" element={<AttendancePage />} />
+            <Route path="courses" element={<Courses />} />
+            <Route path="add-assignment" element={<AddAssignment />} />
+            <Route
+              path="teacher-term-condition"
+              element={<TeacherTermsAndConditions />}
+            />
             {/* Add more routes here */}
           </Route>
 

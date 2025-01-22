@@ -51,12 +51,8 @@ const TeacherDashboard = () => {
               <AiOutlineCalendar className=" hover:text-black  " />
             </button>
           </span>
-
           <span className="text-[#105183]">{formatTime(currentDateTime)}</span>
         </div>
-        <h1 className="flex justify-center text-md font-montserrat bg-[#105183] text-white p-2 rounded">
-          Welcome to the Teacher Dashboard
-        </h1>
         {/* Calendar Popup */}
         {isCalendarOpen && (
           <div className="absolute z-50 bg-white p-4 shadow-lg rounded mt-2">

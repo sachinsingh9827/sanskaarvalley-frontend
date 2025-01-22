@@ -1,11 +1,49 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import dataNotFound from "../../image.svg";
+
 const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [faqs, setFaqs] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Start with loading as true
   const [error, setError] = useState("");
+  const [language, setLanguage] = useState("en"); // Default language is English
+
+  const translateText = async (text, targetLang) => {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(
+      text
+    )}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error("Translation API failed");
+      }
+      const data = await res.json();
+      return data[0][0][0];
+    } catch (error) {
+      console.error("Error during translation:", error);
+      return text; // Return original text if there was an error
+    }
+  };
+
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    setLanguage(selectedLanguage);
+  };
+
+  const translateFAQContent = async (faqList, targetLang) => {
+    const translatedFaqs = [];
+    for (const faq of faqList) {
+      const translatedQuestion = await translateText(faq.question, targetLang);
+      const translatedAnswer = await translateText(faq.answer, targetLang);
+      translatedFaqs.push({
+        ...faq,
+        question: translatedQuestion,
+        answer: translatedAnswer,
+      });
+    }
+    return translatedFaqs; // Return translated FAQs to update state later
+  };
 
   // Fetch FAQs from the API
   useEffect(() => {
@@ -16,16 +54,27 @@ const FAQ = () => {
         const response = await axios.get(
           "https://sanskaarvalley-backend.vercel.app/faq/active"
         ); // Replace with your API endpoint
-        setFaqs(response.data.faqs); // Assuming the response contains an array of FAQs
+        const fetchedFaqs = response.data.faqs;
+
+        // Translate FAQ content if the language is not English
+        if (language !== "en") {
+          const translatedFaqs = await translateFAQContent(
+            fetchedFaqs,
+            language
+          );
+          setFaqs(translatedFaqs); // Set the translated FAQs
+        } else {
+          setFaqs(fetchedFaqs); // Set original content for English
+        }
       } catch (err) {
         setError("Failed to load FAQs. Please try again later.");
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading once the data is fetched or error occurs
       }
     };
 
     fetchFAQs();
-  }, []); // Empty dependency array means it will run once when the component mounts
+  }, [language]); // Adding `language` to the dependency array ensures the content is re-fetched and re-translated
 
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -41,6 +90,16 @@ const FAQ = () => {
           Find answers to common questions about Sanskaar Valley School. If you
           don't find the answer you're looking for, feel free to contact us.
         </p>
+      </div>
+      <div className="flex justify-end mb-4">
+        <select
+          className="text-lg border border-[#105183] rounded-full p-2 hover:bg-[#105183] hover:text-white"
+          value={language}
+          onChange={handleLanguageChange}
+        >
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+        </select>
       </div>
 
       {loading ? (
