@@ -153,10 +153,10 @@ const TeacherTermsAndConditions = () => {
                 key={key}
                 className="bg-gray-100 p-4 rounded-lg shadow-md mb-6"
               >
-                <h2 className="text-2xl font-semibold mb-4 text-[#105183]">
+                <h2 className="text-xl font-semibold mb-4 text-[#105183]">
                   {content[key]?.heading}
                 </h2>
-                <p className="text-lg mb-2 text-gray-600">
+                <p className="text-sm mb-2 text-gray-600">
                   {content[key]?.description}
                 </p>
               </div>

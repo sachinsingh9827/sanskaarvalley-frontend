@@ -15,6 +15,7 @@ import "./TeacherSidebar.css";
 const sidebarItems = [
   { name: "Dashboard", icon: <FaChalkboardTeacher />, path: "dashboard" },
   { name: "Courses", icon: <FaBook />, path: "courses" },
+  { name: "Results", icon: <FaClipboardList />, path: "submit-results" },
   { name: "Attendance", icon: <FaClipboardList />, path: "attendance" },
   { name: "Calendar", icon: <FaCalendarAlt />, path: "teacher-calendar" },
   { name: "Students", icon: <FaUserCheck />, path: "student-list" },

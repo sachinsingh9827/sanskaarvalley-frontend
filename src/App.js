@@ -56,6 +56,7 @@ import AttendancePage from "./Componets/TeacherDashboard/Attendance/Attendance";
 import Courses from "./Componets/TeacherDashboard/Courses/Courses";
 import AddAssignment from "./Componets/TeacherDashboard/AddAssignment/AddAssignment";
 import TeacherTermsAndConditions from "./Componets/TeacherDashboard/TeacherTermsAndConditions/TeacherTermsAndConditions";
+import SubmitResults from "./Componets/TeacherDashboard/SubmitResults/SubmitResults";
 function App() {
   return (
     <Provider store={store}>
@@ -161,6 +162,7 @@ function App() {
               path="teacher-term-condition"
               element={<TeacherTermsAndConditions />}
             />
+            <Route path="submit-results" element={<SubmitResults />} />
             {/* Add more routes here */}
           </Route>
 
