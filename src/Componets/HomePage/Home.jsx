@@ -7,6 +7,7 @@ import ContactUs from "../ContactUs/ContactUs";
 import Tabs from "./Tabs";
 import TopStudents from "../UserDashboard/Common/TopStudents";
 import SchoolPolicies from "../Reusable/SchoolPolicies";
+import ReviewForm from "../Reusable/ReviewForm";
 const Home = () => {
   return (
     <div className="bg-sky-100">
@@ -40,6 +41,11 @@ const Home = () => {
       <section id="services" className="py-4 bg-gray-100">
         <div className="container mx-auto px-4">
           <ContactUs />
+        </div>
+      </section>
+      <section id="reviews" className="py-4 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <ReviewForm />
         </div>
       </section>
     </div>

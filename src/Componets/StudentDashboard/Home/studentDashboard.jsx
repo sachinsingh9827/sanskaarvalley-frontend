@@ -22,6 +22,10 @@ const studentDashboard = () => {
               <a href="#" className="flex items-center space-x-2 text-white">
                 <i className="fas fa-credit-card"></i>
                 <span>Payment Info</span>
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold mb-4">Payment Details</h2>
+                  <p>Payment-related information will be displayed here.</p>
+                </div>
               </a>
               <a href="#" className="flex items-center space-x-2 text-white">
                 <i className="fas fa-clipboard-list"></i>

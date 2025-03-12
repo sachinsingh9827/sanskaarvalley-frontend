@@ -44,7 +44,6 @@ import JobApplicationsPage from "./Componets/AdminDashboard/Career/JobApplicatio
 import NotificationPage from "./Componets/TeacherDashboard/NotificationPage/NotificationPage";
 import TeacherProfile from "./Componets/TeacherDashboard/TeacherProfile/TeacherProfile";
 import ShelfDeclaration from "./Componets/Login/ShelfDeclaration";
-import studentDashboard from "./Componets/StudentDashboard/Home/studentDashboard";
 import DeveloperInfo from "./Componets/UserDashboard/Common/DeveloperInfo";
 import CalendarManagement from "./Componets/AdminDashboard/SchoolCalendar/CalendarManagement";
 import RegisterTeacher from "./Componets/AdminDashboard/Teacher/RegisterTeacher";
@@ -57,6 +56,8 @@ import Courses from "./Componets/TeacherDashboard/Courses/Courses";
 import AddAssignment from "./Componets/TeacherDashboard/AddAssignment/AddAssignment";
 import TeacherTermsAndConditions from "./Componets/TeacherDashboard/TeacherTermsAndConditions/TeacherTermsAndConditions";
 import SubmitResults from "./Componets/TeacherDashboard/SubmitResults/SubmitResults";
+import PaymentPage from "./Componets/StudentDashboard/Home/PaymentPage";
+import ReviewForm from "./Componets/Reusable/ReviewForm";
 function App() {
   return (
     <Provider store={store}>
@@ -79,8 +80,8 @@ function App() {
           <Route path="careers" element={<Career />} />
           <Route path="developerInfo" element={<DeveloperInfo />} />
           <Route path="school-policies" element={<SchoolPolicies />} />
+          <Route path="/reviews" element={<ReviewForm />} />
           {/* <Route path="*" element={<PageNotFound />} /> */}
-
           {/* Admin Routes */}
           <Route
             path="/admin"
@@ -140,7 +141,6 @@ function App() {
               }
             />
           </Route>
-
           {/* Teacher Routes */}
           <Route
             path="/teacher/*"
@@ -165,19 +165,20 @@ function App() {
             <Route path="submit-results" element={<SubmitResults />} />
             {/* Add more routes here */}
           </Route>
-
           {/* Student Routes */}
           <Route
             path="/student/*"
             element={
               <ProtectedRoute role="student">
-                {" "}
-                <studentDashboard />{" "}
+                <Routes>
+                  {" "}
+                  {/* Wrap routes inside <Routes> */}
+                  <Route path="/dashboard" element={<studentDashboard />} />
+                  <Route path="/payment" element={<PaymentPage />} />
+                </Routes>
               </ProtectedRoute>
             }
-          >
-            {" "}
-          </Route>
+          />{" "}
         </Routes>
         <Footer />
       </Router>
