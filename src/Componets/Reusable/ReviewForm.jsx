@@ -153,7 +153,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowReviewForm(true);
-    }, 100000);
+    }, 10000);
     fetchReviews(); // Fetch reviews on mount
     return () => clearTimeout(timer);
   }, []);
