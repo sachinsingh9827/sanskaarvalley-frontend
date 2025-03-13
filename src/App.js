@@ -80,7 +80,7 @@ function App() {
           <Route path="careers" element={<Career />} />
           <Route path="developerInfo" element={<DeveloperInfo />} />
           <Route path="school-policies" element={<SchoolPolicies />} />
-          <Route path="/reviews" element={<ReviewForm />} />
+          {/* <Route path="/reviews" element={<ReviewForm />} /> */}
           {/* <Route path="*" element={<PageNotFound />} /> */}
           {/* Admin Routes */}
           <Route
